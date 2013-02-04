@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.1.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_1_0.dtd">
+<!-- 
+Copyright (C) 2013 Permeance Technologies
+
+This program is free software: you can redistribute it and/or modify it under the terms of the
+GNU General Public License as published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If
+not, see <http://www.gnu.org/licenses/>.
+-->
+<hook>
+    <portal-properties>portal.properties</portal-properties>
+	<language-properties>content/Language.properties</language-properties>
+	<custom-jsp-dir>/WEB-INF/custom_jsps</custom-jsp-dir>
+    <struts-action>
+        <struts-action-path>/document_library/download_folder</struts-action-path>
+        <struts-action-impl>au.com.permeance.liferay.portlet.documentlibrary.action.DownloadFolderZipAction</struts-action-impl>
+    </struts-action>
+</hook>
