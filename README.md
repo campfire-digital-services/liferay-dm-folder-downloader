@@ -3,17 +3,23 @@
 This project provides a Liferay Portal action to download the contents of a Documents and Media folder as a ZIP file.
 
 
+## Supported Products
+
+* Liferay Portal 6.1.x CE
+* Liferay Portal 6.1.x EE
+
+
 ## Usage
 
-1. Navigate to page containing Documents and Media portlet.
+* Navigate to page containing Documents and Media portlet.
 
 ![Documents and Media Portlet](/docs/images/dm-portlet-20130209.png "Documents an Media Portlet")
 
-2. Click on the "Action" button for a folder and select the "Download Folder (ZIP)" menu item.
+* Click on the "Action" button for a folder and select the "Download Folder (ZIP)" menu item.
 
 ![Documents and Media Folder Action Menu](/docs/images/dm-folder-action-menu-20130131-annot.png "Documents an Media Folder Action Menu")
 
-3. Open ZIP file or save to local download folder in your web browser.
+* Open ZIP file or save to local download folder in your web browser.
 
 ![Firefox Download File Dialog](/docs/images/firefox-download-file-dialog-20130209.png "Firefox Download File Dialog")
 
@@ -24,4 +30,9 @@ This project provides a Liferay Portal action to download the contents of a Docu
 
 Deploy "liferay-dm-folder-download-hook-XXX.war" to "LIFERAY_HOME/deploy" folder.
 
+
+## Project Team
+
+* Tim Telcik 
+* Chun Ho
 
