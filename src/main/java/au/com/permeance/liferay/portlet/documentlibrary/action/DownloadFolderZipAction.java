@@ -17,6 +17,7 @@ package au.com.permeance.liferay.portlet.documentlibrary.action;
 import au.com.permeance.liferay.portlet.documentlibrary.service.DLFolderExportZipServiceUtil;
 import au.com.permeance.liferay.portlet.util.ExtPropsValues;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -61,6 +63,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Chun Ho <chun.ho@permeance.com.au>
  * 
  * @see https://www.liferay.com/documentation/liferay-portal/6.1/development/-/ai/lp-6-1-dgen06-overriding-and-adding-struts-actions-0
+ * @see http://www.liferay.com/web/mika.koivisto/blog/-/blogs/overriding-and-adding-struts-actions-from-hook-plugins/maximized
  * @see http://www.liferay.com/web/raymond.auge/blog/-/blogs/801426/maximized
  * @see MimeTypesUtil
  */
@@ -86,7 +89,6 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
 
         } catch (Exception e) {
 
-        	// TODO: Use language keys
             String msg = "Error downloading folder " + folderId + " from repository " + repositoryId + " : " + e.getMessage();
             s_log.error(msg, e);
             SessionErrors.add(resourceRequest, e.getClass().getName());
@@ -109,8 +111,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
         PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
 
         if (!folder.containsPermission(permissionChecker, ActionKeys.VIEW)) {
-        	// TODO: Use Language key
-            throw new Exception("Missing permission to view folder " + folder.getName());
+        	throw new PrincipalException();
         }
         
         java.io.File tempZipFile = null;
@@ -121,21 +122,19 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
         	
             DLFolderExportZipServiceUtil.exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, tempZipFile);
             
-            // TODO: review download zip file naming strategy
             String downloadZipFileName = folder.getName() + ZIP_FILE_EXT;
             
             sendZipFile(resourceRequest, resourceResponse, tempZipFile, downloadZipFileName);
 
         } catch (Exception e) {
         	
-        	// TODO: Use Language key
         	String msg = "Error downloading folder " + folderId 
         				+ " from repository " + repositoryId
         				+ " : " + e.getMessage();
         	
         	s_log.error( msg ,e );
         	
-        	throw new Exception( msg, e ); 
+        	throw new PortalException( msg, e ); 
         	
         } finally {
         	
@@ -184,7 +183,6 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
             responseOutputStream.close();
 
             if (s_log.isDebugEnabled()) {
-            	// TODO: Use Language key
                 s_log.debug("sent " + responseByteCount + " byte(s) for ZIP file " + zipFileName);
             }
 
@@ -195,10 +193,9 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
         		name = zipFile.getName();
         	}
         	
-        	// TODO: Use Language key
             String msg = "Error sending ZIP file " + name + " : " + e.getMessage();
             s_log.error(msg);
-            throw new Exception(msg, e);
+            throw new PortalException(msg, e);
 
         } finally {
 

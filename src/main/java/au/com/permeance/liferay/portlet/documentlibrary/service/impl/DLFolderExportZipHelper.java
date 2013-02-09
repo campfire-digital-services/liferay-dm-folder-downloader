@@ -67,7 +67,6 @@ public class DLFolderExportZipHelper {
         	
     	} catch (Exception e) {
     		
-    		// TODO: use Language keys
             String msg = "Error exporting folder " + folderId 
             		+ " from repository " + repositoryId 
             		+ " to ZIP file " + zipFileName 
@@ -106,7 +105,6 @@ public class DLFolderExportZipHelper {
 
         	String fileName = zipFile.getName();
         	
-        	// TODO: use language keys
             String msg = "Error exporting folder " + folderId 
             		+ " from repository " + repositoryId 
             		+ " to ZIP file " + fileName 
@@ -152,8 +150,6 @@ public class DLFolderExportZipHelper {
 
             String zipWriterLabel = zipWriter.getPath();
 
-        	// TODO: Use Language key
-            
             String msg = "Error exporting folder " + folderId 
             		+ " from repository " + repositoryId 
             		+ " to ZIP writer " + zipWriterLabel 
@@ -200,7 +196,6 @@ public class DLFolderExportZipHelper {
 
                 } else {
 
-                	// TODO: Use Language key
                     String msg = "Error exporting file entry to ZIP file : " + e.getMessage();
                     s_log.error(msg, e);
                     throw new PortalException(msg, e);
@@ -255,7 +250,6 @@ public class DLFolderExportZipHelper {
 
             String zipWriterLabel = zipWriter.getPath();
 
-        	// TODO: Use Language key
             String msg = "Error exporting file entry " + fileEntry + " to ZIP writer " + zipWriterLabel + " : " + e.getMessage();
 
             s_log.error(msg, e);
@@ -321,8 +315,7 @@ public class DLFolderExportZipHelper {
             }
 
             if (s_log.isDebugEnabled()) {
-            	// TODO: Use Language key
-                s_log.debug(oldZipEntryName + " already exists in zip file, renaming to " + zipEntryName + " instead");
+                s_log.debug(oldZipEntryName + " already exists in ZIP file, renaming to " + zipEntryName);
             }
         }
 

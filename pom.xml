@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- TODO: Extend from permeance-parent POM -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
+	
+    <parent>
+        <artifactId>permeance-parent</artifactId>
+        <groupId>au.com.permeance</groupId>
+        <!-- 
+        <version>0.6-SNAPSHOT</version>
+        -->
+        <version>0.5</version>        
+    </parent>
 
 	<groupId>au.com.permeance.utility</groupId>
 	<artifactId>liferay-dm-folder-download-hook</artifactId>
@@ -14,9 +21,6 @@
 
 	<properties>
 		<liferay.version>6.1.1</liferay.version>
-		<!--
-		<liferay.version>6.1.20</liferay.version>
-		-->
 	</properties>
 
 	<dependencies>
@@ -76,6 +80,7 @@
 		</dependency>
 	</dependencies>
 
+	<!-- 
 	<repositories>
 		<repository>
 			<id>repocentral</id>
@@ -87,7 +92,6 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	-->
 
 </project>
-
-
