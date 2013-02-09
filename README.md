@@ -1,4 +1,4 @@
-# Liferay Documents and Media Folder Download Hook Plugin
+# Liferay Documents and Media Folder Download Hook
 
 *liferay-dm-folder-download-hook*
 

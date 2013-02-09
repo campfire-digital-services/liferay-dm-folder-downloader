@@ -12,6 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If
  * not, see <http://www.gnu.org/licenses/>.
  */
+
 package au.com.permeance.liferay.portlet.documentlibrary.service.impl;
 
 import au.com.permeance.liferay.portlet.util.ExtPropsValues;
@@ -136,7 +137,8 @@ public class DLFolderExportZipHelper {
      * @throws SystemException
      * @throws RemoteException
      */
-    public static void exportFolderToZipWriter(long groupId, long repositoryId, long folderId, ServiceContext serviceContext, ZipWriter zipWriter) 
+    public static void exportFolderToZipWriter(
+    		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, ZipWriter zipWriter) 
     	throws PortalException, SystemException 
     {
 
@@ -171,7 +173,18 @@ public class DLFolderExportZipHelper {
     
     /**
      * Export folder to ZIP writer.
-     */
+     * 
+     * @param groupId group id
+     * @param repositoryId source repository containing folder to export
+     * @param folder source folder to export
+     * @param folderPath source folder path to export
+     * @param serviceContext service context
+     * @param zipWriter destination ZIP writer
+     * 
+     * @throws PortalException
+     * @throws SystemException
+     * @throws RemoteException
+     */    
     public static void exportFolderToZipWriter(
     		long groupId, long repositoryId, Folder folder, String folderPath, ServiceContext serviceContext, ZipWriter zipWriter) 
     	throws PortalException, SystemException 
@@ -223,11 +236,10 @@ public class DLFolderExportZipHelper {
     
     /**
      * Adds a file entry as a ZIP entry.
-     * 
-     * @param groupId groupId 
-     * @param zipWriter ZIP writer
-     * @param folder folder
+     *
      * @param fileEntry file entry
+     * @param folderPath folder path
+     * @param zipWriter ZIP writer
      * 
      * @throws PortalException
      * @throws SystemException
@@ -280,13 +292,15 @@ public class DLFolderExportZipHelper {
      * Returns a ZIP entry name for the file entry.
      * 
      * @param fileEntry file entry
+     * @param folderPath file path
+     * @param zipWriter ZIP writer
      * 
      * @return ZIP entry name
      * 
      * @throws SystemException
      * @throws PortalException
      */
-    public static String buildZipEntryName(FileEntry fileEntry, String folderPath, ZipWriter writer) 
+    public static String buildZipEntryName(FileEntry fileEntry, String folderPath, ZipWriter zipWriter) 
     		throws SystemException, PortalException 
     {
 
@@ -302,13 +316,13 @@ public class DLFolderExportZipHelper {
         // build zip entry name
         String zipEntryName = folderPath + fileEntryBaseName + FilenameUtils.EXTENSION_SEPARATOR_STR + fileEntry.getExtension();
 
-        if (writer.hasAllocatedPath(zipEntryName)) {
+        if (zipWriter.hasAllocatedPath(zipEntryName)) {
             String oldZipEntryName = zipEntryName;
             int counter = 1;
             while (true) {
                 zipEntryName = folderPath + fileEntryBaseName + StringPool.OPEN_BRACKET + counter + StringPool.CLOSE_BRACKET
                         + FilenameUtils.EXTENSION_SEPARATOR_STR + fileEntry.getExtension();
-                if (!writer.hasAllocatedPath(zipEntryName)) {
+                if (!zipWriter.hasAllocatedPath(zipEntryName)) {
                     break;
                 }
                 counter++;

@@ -12,6 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If
  * not, see <http://www.gnu.org/licenses/>.
  */
+
 package au.com.permeance.liferay.portlet.util;
 
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -37,6 +38,7 @@ import org.apache.commons.io.FilenameUtils;
  * NOTE: This class is similar to Liferay's ZipWriter, but does not share the same PACL issues.
  * 
  * @author Chun Ho <chun.ho@permeance.com.au>
+ * @author Tim Telcik <tim.telcik@permeance.com.au>
  * 
  * @see com.liferay.portal.kernel.zip.ZipWriter
  * @see ZipWriterFactory
@@ -50,28 +52,28 @@ public class ZipWriter {
 
 
     private ZipOutputStream zos = null;
-    private File targetfile = null;
+    private File zipFile = null;
     private final Set<String> allocatedPaths = new HashSet<String>();
 
     
     public ZipWriter() throws IOException {
     	String tempFilePrefix = PortalUUIDUtil.generate();
     	String tempFileSuffix = ZIP_FILE_EXT;
-    	targetfile = File.createTempFile(tempFilePrefix, tempFileSuffix);
-        zos = new ZipOutputStream(new FileOutputStream(targetfile));
+    	this.zipFile = File.createTempFile(tempFilePrefix, tempFileSuffix);
+        this.zos = new ZipOutputStream(new FileOutputStream(this.zipFile));
     }
 
     
     public ZipWriter(File file) throws IOException {
-        targetfile = file;
-        zos = new ZipOutputStream(new FileOutputStream(targetfile));
+        this.zipFile = file;
+        this.zos = new ZipOutputStream(new FileOutputStream(this.zipFile));
     }
 
     
     public void close() {
         try {
-            if (zos != null) {
-                zos.close();
+            if (this.zos != null) {
+                this.zos.close();
             }
         } catch (Exception e) {
         }
@@ -79,31 +81,37 @@ public class ZipWriter {
 
     
     public void addEntry(String path, InputStream is) throws IOException {
-        zos.putNextEntry(new ZipEntry(path));
+        this.zos.putNextEntry(new ZipEntry(path));
         StreamUtil.transfer(is, zos, false);
-        allocatedPaths.add(path);
+        this.allocatedPaths.add(path);
     }
 
     
     public File getFile() {
         close();
-        return targetfile;
+        return this.zipFile;
     }
 
     
     public String getPath() {
-        return targetfile.getAbsolutePath();
+    	String path = null;
+    	if (this.zipFile != null) {
+    		path = this.zipFile.getAbsolutePath(); 
+    	}
+        return path;
     }
 
     
     public boolean hasAllocatedPath(String path) {
-        return allocatedPaths.contains(path);
+        return this.allocatedPaths.contains(path);
     }
 
     
     @Override
     protected void finalize() throws Throwable {
         close();
+        this.allocatedPaths.clear();
+        this.zipFile = null;
     }
 
 }

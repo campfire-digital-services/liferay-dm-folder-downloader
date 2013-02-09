@@ -12,6 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If
  * not, see <http://www.gnu.org/licenses/>.
  */
+
 package au.com.permeance.liferay.portlet.documentlibrary.service;
 
 import au.com.permeance.liferay.portlet.documentlibrary.service.impl.DLFolderExportZipHelper;
@@ -30,14 +31,11 @@ import com.liferay.portal.service.ServiceContext;
  */
 public class DLFolderExportZipServiceUtil {
 
-    private static final String SERVLET_CONTEXT_NAME = "liferay-dl-folder-hook";
+    private static final String SERVLET_CONTEXT_NAME = "liferay-dm-download-folder-hook";
 
     private static final String SERVICE_FIELD_NAME = "_service";
-
-    // TODO: wait for Liferay patch to fix issues between PACL and ReferenceRegistry:
-    // [RuntimeChecker:256] Attempted to access declared members
-    // [ReferenceRegistry:42] Not allowed to get field _service for class
-    // au.com.permeance.liferay.portlet.documentlibrary.service.DLFolderExportZipServiceUtil
+    
+    private static DLFolderExportZipService _service;
 
     
     public static void exportFolderToZipFile(long groupId, long repositoryId, long folderId, ServiceContext serviceContext, String zipFileName)
@@ -80,8 +78,5 @@ public class DLFolderExportZipServiceUtil {
     @Deprecated
     public void setService(DLFolderExportZipService service) {
     }
-
-    
-    private static DLFolderExportZipService _service;
 
 }

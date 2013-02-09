@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
 <!-- 
 Copyright (C) 2013 Permeance Technologies
 
@@ -14,6 +15,7 @@ General Public License for more details.
 You should have received a copy of the GNU General Public License along with this program. If
 not, see <http://www.gnu.org/licenses/>.
 -->
+
 <beans>
 	<bean id="au.com.permeance.liferay.portlet.documentlibrary.service.DLFolderExportZipService" 
 		class="au.com.permeance.liferay.portlet.documentlibrary.service.impl.DLFolderExportZipServiceImpl" lazy-init="true" />

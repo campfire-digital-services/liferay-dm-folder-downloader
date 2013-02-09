@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 
 
 /**
- * Custom Property Keys.
+ * Extension Property Keys.
  * 
  * NOTE: The ExtPropsKeys interface and ExtPropValues class
  *       is based on Liferay's PropsKeys and PropsValues approach to property management.
