@@ -63,7 +63,6 @@ public class DLFolderExportZipHelper {
     	try {
     		
     		java.io.File zipFile = new java.io.File(zipFileName);
-
         	exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, zipFile);
         	
     	} catch (Exception e) {
@@ -304,8 +303,7 @@ public class DLFolderExportZipHelper {
     		throws SystemException, PortalException 
     {
 
-    	// use file entry title as file name
-        // LP 6.1+ Document Library Repository
+        // LP 6.1+ Document Library Repository - use file entry title as file name
         // NOTE: File name result may be different for other repositories
         String fileEntryBaseName = fileEntry.getTitle();
 

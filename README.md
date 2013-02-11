@@ -30,11 +30,13 @@ Step 3. Open ZIP file or save to local download folder in your web browser.
 
 ### Liferay Portal + Apache Tomcat Bundle
 
-Deploy "liferay-dm-folder-download-hook-XXX.war" to "LIFERAY_HOME/deploy" folder.
+eg.
+
+Deploy "liferay-dm-folder-download-hook-1.0.0.0.war" to "LIFERAY_HOME/deploy" folder.
 
 
 ## Project Team
 
-* Tim Telcik 
-* Chun Ho
+* Tim Telcik - tim.telcik@permeance.com.au
+* Chun Ho - chun.ho@permeance.com.au
 

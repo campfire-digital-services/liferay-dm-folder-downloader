@@ -62,11 +62,6 @@ import org.apache.commons.lang.StringUtils;
  * 
  * @author Tim Telcik <tim.telcik@permeance.com.au>
  * @author Chun Ho <chun.ho@permeance.com.au>
- * 
- * @see https://www.liferay.com/documentation/liferay-portal/6.1/development/-/ai/lp-6-1-dgen06-overriding-and-adding-struts-actions-0
- * @see http://www.liferay.com/web/mika.koivisto/blog/-/blogs/overriding-and-adding-struts-actions-from-hook-plugins/maximized
- * @see http://www.liferay.com/web/raymond.auge/blog/-/blogs/801426/maximized
- * @see MimeTypesUtil
  */
 public class DownloadFolderZipAction extends BaseStrutsPortletAction {
 
@@ -92,6 +87,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
 
             String msg = "Error downloading folder " + folderId + " from repository " + repositoryId + " : " + e.getMessage();
             s_log.error(msg, e);
+            
             SessionErrors.add(resourceRequest, e.getClass().getName());
             resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "" + HttpStatus.SC_MOVED_TEMPORARILY);
             resourceResponse.addProperty("Location", resourceResponse.createRenderURL().toString());
@@ -120,11 +116,8 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
         try {
         	
         	tempZipFile = createTempZipFile();
-        	
             DLFolderExportZipServiceUtil.exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, tempZipFile);
-            
             String downloadZipFileName = folder.getName() + ZIP_FILE_EXT;
-            
             sendZipFile(resourceRequest, resourceResponse, tempZipFile, downloadZipFileName);
 
         } catch (Exception e) {
@@ -140,7 +133,6 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
         } finally {
         	
         	safeDeleteFile(tempZipFile);
-        	
         	tempZipFile = null;
             
         }
@@ -209,11 +201,8 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
     private File createTempZipFile() throws IOException {
     	
     	String tempFilePrefix = PortalUUIDUtil.generate();
-    	
     	String tempFileSuffix = ZIP_FILE_EXT;
-    	
     	File tempFile = File.createTempFile(tempFilePrefix, tempFileSuffix);
-
     	return tempFile;
     }
     
