@@ -13,7 +13,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.com.permeance.liferay.portlet.util;
+package au.com.permeance.liferay.util.zip;
 
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -35,7 +35,8 @@ import org.apache.commons.io.FilenameUtils;
 /**
  * Utility class to create ZIP file.
  *  
- * NOTE: This class is similar to Liferay's ZipWriter, but does not share the same PACL issues.
+ * NOTE: This class is similar to Liferay's ZipWriter, but does not share the PACL issues
+ *       inherited from using the underlying TrueZip library.
  * 
  * @author Chun Ho <chun.ho@permeance.com.au>
  * @author Tim Telcik <tim.telcik@permeance.com.au>
@@ -75,6 +76,9 @@ public class ZipWriter {
             if (this.zos != null) {
                 this.zos.close();
             }
+            if (this.allocatedPaths != null) {
+                this.allocatedPaths.clear();
+            }
         } catch (Exception e) {
         }
     }
@@ -104,14 +108,6 @@ public class ZipWriter {
     
     public boolean hasAllocatedPath(String path) {
         return this.allocatedPaths.contains(path);
-    }
-
-    
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        this.allocatedPaths.clear();
-        this.zipFile = null;
     }
 
 }

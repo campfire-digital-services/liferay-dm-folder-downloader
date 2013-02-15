@@ -39,9 +39,7 @@ public class DLFolderExportZipServiceImpl implements DLFolderExportZipService {
     		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, String zipFileName)
     	throws PortalException, SystemException 
     {
-    	
     	DLFolderExportZipHelper.exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, zipFileName);
-		
     }
     
 
@@ -49,7 +47,6 @@ public class DLFolderExportZipServiceImpl implements DLFolderExportZipService {
     		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, java.io.File zipFile)
     	throws PortalException, SystemException
     {
-    	
     	DLFolderExportZipHelper.exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, zipFile);
     }
 

@@ -14,29 +14,25 @@
  */
 package au.com.permeance.liferay.portlet.util;
 
-import au.com.permeance.liferay.portlet.kernel.util.ExtPropsKeys;
+import au.com.permeance.liferay.portlet.kernel.util.HookPropsKeys;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 
 /**
- * Extension Property Values.
- * 
- * NOTE: The ExtPropsKeys interface and ExtPropValues class is based on Liferay's PropsKeys and
- * PropsValues approach to property management.
+ * Hook Property Values.
  * 
  * @author Tim Telcik <tim.telcik@permeance.com.au>
  * 
- * @see ExtPropsKeys
- * @see PropsValues
+ * @see HookPropsKeys
  */
-public class ExtPropsValues {
+public class HookPropsValues {
 
     public static final int DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE 
-    	= GetterUtil.getInteger(PropsUtil.get(ExtPropsKeys.DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE));
+    	= GetterUtil.getInteger(PropsUtil.get(HookPropsKeys.DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE));
     
-    public static final boolean DL_FOLDER_DOWNLOAD_IGNORE_ERRORS 
-		= GetterUtil.getBoolean(PropsUtil.get(ExtPropsKeys.DL_FOLDER_DOWNLOAD_IGNORE_ERRORS),true);
-
+    public static final String DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME 
+		= GetterUtil.getString(PropsUtil.get(HookPropsKeys.DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME));    
+    
 }

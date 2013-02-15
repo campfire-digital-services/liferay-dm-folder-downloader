@@ -15,8 +15,7 @@
 
 package au.com.permeance.liferay.portlet.documentlibrary.service.impl;
 
-import au.com.permeance.liferay.portlet.util.ExtPropsValues;
-import au.com.permeance.liferay.portlet.util.ZipWriter;
+import au.com.permeance.liferay.util.zip.ZipWriter;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
@@ -52,7 +52,7 @@ import org.apache.commons.io.FilenameUtils;
  */
 public class DLFolderExportZipHelper {
 
-    private static Log s_log = LogFactoryUtil.getLog(DLFolderExportZipHelper.class);
+    private static final Log s_log = LogFactoryUtil.getLog(DLFolderExportZipHelper.class);
 
     
     public static void exportFolderToZipFile(
@@ -79,14 +79,13 @@ public class DLFolderExportZipHelper {
 
             } else if (e instanceof SystemException) {
                 throw (SystemException) e;
-                
             }
     	}
    	}
     
     	
     public static void exportFolderToZipFile(
-    		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, java.io.File zipFile) 
+    		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, File zipFile) 
     	throws PortalException, SystemException 
     {
 
@@ -95,7 +94,6 @@ public class DLFolderExportZipHelper {
         try {
 
             zipWriter = new ZipWriter(zipFile);
-            // zipWriter = ZipWriterFactoryUtil.getZipWriter(zipFile);
 
             exportFolderToZipWriter(groupId, repositoryId, folderId, serviceContext, zipWriter);
             
@@ -117,7 +115,6 @@ public class DLFolderExportZipHelper {
 
             } else if (e instanceof SystemException) {
                 throw (SystemException) e;
-
             }
         }
     }
@@ -163,10 +160,8 @@ public class DLFolderExportZipHelper {
 
             } else if (e instanceof SystemException) {
                 throw (SystemException) e;
-
             }
         }
-
     }
 
     
@@ -195,24 +190,12 @@ public class DLFolderExportZipHelper {
                 QueryUtil.ALL_POS, null);
 
         for (FileEntry fileEntry : fileEntryList) {
-
             try {
-
                 exportFileEntryToZipWriter(fileEntry, folderPath, zipWriter);
-
             } catch (Exception e) {
-
-                if (ExtPropsValues.DL_FOLDER_DOWNLOAD_IGNORE_ERRORS) {
-
-                    continue;
-
-                } else {
-
-                    String msg = "Error exporting file entry to ZIP file : " + e.getMessage();
-                    s_log.error(msg, e);
-                    throw new PortalException(msg, e);
-
-                }
+            	String msg = "Error exporting file entry to ZIP file : " + e.getMessage();
+            	s_log.error(msg, e);
+            	throw new PortalException(msg, e);
             }
         }
 
@@ -223,11 +206,8 @@ public class DLFolderExportZipHelper {
                 QueryUtil.ALL_POS, null);
 
         for (Folder subFolder : subFolderList) {
-
             String subFolderName = subFolder.getName();
-
             String subFolderPath = folderPath + subFolderName + StringPool.FORWARD_SLASH;
-
             exportFolderToZipWriter(groupId, repositoryId, subFolder, subFolderPath, serviceContext, zipWriter);
         }
     }
@@ -252,9 +232,7 @@ public class DLFolderExportZipHelper {
         try {
 
             String zipEntryName = buildZipEntryName(fileEntry, folderPath, zipWriter);
-
             fileInputStream = fileEntry.getContentStream();
-
             zipWriter.addEntry(zipEntryName, fileInputStream);
 
         } catch (Exception e) {
@@ -278,8 +256,8 @@ public class DLFolderExportZipHelper {
         } finally {
             try {
                 if (fileInputStream != null) {
-                    fileInputStream.close();
-                    // fileInputStream = null;
+                	fileInputStream.close();
+                	fileInputStream = null;
                 }
             } catch (Exception e) {
             }
@@ -303,8 +281,7 @@ public class DLFolderExportZipHelper {
     		throws SystemException, PortalException 
     {
 
-        // LP 6.1+ Document Library Repository - use file entry title as file name
-        // NOTE: File name result may be different for other repositories
+        // Use file entry title as file name
         String fileEntryBaseName = fileEntry.getTitle();
 
         // normalize base name by stripping extension and replacing non-alphanum chars with underscore

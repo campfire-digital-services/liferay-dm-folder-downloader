@@ -16,12 +16,17 @@
 package au.com.permeance.liferay.portlet.documentlibrary.service;
 
 import au.com.permeance.liferay.portlet.documentlibrary.service.impl.DLFolderExportZipHelper;
+import au.com.permeance.liferay.portlet.util.HookPropsValues;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
+
+import java.io.File;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -30,8 +35,6 @@ import com.liferay.portal.service.ServiceContext;
  * @author Tim Telcik <tim.telcik@permeance.com.au>
  */
 public class DLFolderExportZipServiceUtil {
-
-    private static final String SERVLET_CONTEXT_NAME = "liferay-dm-download-folder-hook";
 
     private static final String SERVICE_FIELD_NAME = "_service";
     
@@ -46,7 +49,7 @@ public class DLFolderExportZipServiceUtil {
 
     
     public static void exportFolderToZipFile(
-    		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, java.io.File zipFile) 
+    		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, File zipFile) 
     	throws PortalException, SystemException 
     {
     	DLFolderExportZipHelper.exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, zipFile);
@@ -56,16 +59,13 @@ public class DLFolderExportZipServiceUtil {
     public static DLFolderExportZipService getService() {
 
         if (_service == null) {
-
-            // NOTE: PortalBeanLocatorUtil does not resolve bean from hook applicationContext
-            // _service = (DLFolderExportService)PortalBeanLocatorUtil.locate(DLFolderExportService.class.getName());
-
-            // NOTE: PortletBeanLocatorUtil requires hook web app context name to resolve bean
-            _service = (DLFolderExportZipService) PortletBeanLocatorUtil.locate(
-            		SERVLET_CONTEXT_NAME, DLFolderExportZipService.class.getName());
-
+        	String servletContextName = HookPropsValues.DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME;
+        	if (StringUtils.isEmpty(servletContextName)) {
+        		throw new IllegalStateException("Servlet context name is undefined");
+        	}
+        	String beanName = DLFolderExportZipService.class.getName();
+            _service = (DLFolderExportZipService) PortletBeanLocatorUtil.locate(servletContextName, beanName);
             ReferenceRegistry.registerReference(DLFolderExportZipServiceUtil.class, SERVICE_FIELD_NAME);
-
         }
 
         return _service;

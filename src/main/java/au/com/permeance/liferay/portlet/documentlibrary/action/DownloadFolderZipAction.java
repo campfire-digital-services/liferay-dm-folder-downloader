@@ -16,7 +16,7 @@
 package au.com.permeance.liferay.portlet.documentlibrary.action;
 
 import au.com.permeance.liferay.portlet.documentlibrary.service.DLFolderExportZipServiceUtil;
-import au.com.permeance.liferay.portlet.util.ExtPropsValues;
+import au.com.permeance.liferay.portlet.util.HookPropsValues;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -65,7 +65,7 @@ import org.apache.commons.lang.StringUtils;
  */
 public class DownloadFolderZipAction extends BaseStrutsPortletAction {
 
-    private static Log s_log = LogFactoryUtil.getLog(DownloadFolderZipAction.class);
+    private static final Log s_log = LogFactoryUtil.getLog(DownloadFolderZipAction.class);
 
     private static final String FILE_EXT_SEP = FilenameUtils.EXTENSION_SEPARATOR_STR;
     private static final String ZIP_FILE_EXT_NAME = "zip";
@@ -111,7 +111,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
         	throw new PrincipalException();
         }
         
-        java.io.File tempZipFile = null;
+        File tempZipFile = null;
 
         try {
         	
@@ -139,7 +139,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
     }
 
     
-    protected void sendZipFile(ResourceRequest resourceRequest, ResourceResponse resourceResponse, java.io.File zipFile, String zipFileName)
+    protected void sendZipFile(ResourceRequest resourceRequest, ResourceResponse resourceResponse, File zipFile, String zipFileName)
             throws Exception {
 
         FileInputStream zipFileInputStream = null;
@@ -153,7 +153,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
             String zipFileMimeType = MimeTypesUtil.getContentType(zipFileName);
             resourceResponse.setContentType(zipFileMimeType);
 
-            int folderDownloadCacheMaxAge = ExtPropsValues.DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE;
+            int folderDownloadCacheMaxAge = HookPropsValues.DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE;
             if (folderDownloadCacheMaxAge > 0) {
                 String cacheControlValue = "max-age=" + folderDownloadCacheMaxAge + ", must-revalidate";
                 resourceResponse.addProperty(HttpHeaders.CACHE_CONTROL, cacheControlValue);
@@ -165,7 +165,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
             // NOTE: java.io.File may return a length of 0 (zero) for a valid file
             // @see java.io.File#length()
             long zipFileLength = zipFile.length();
-            if ((zipFileLength > 0L) && (zipFileLength < Integer.MAX_VALUE)) {
+            if ((zipFileLength > 0L) && (zipFileLength < (long)Integer.MAX_VALUE)) {
                 resourceResponse.setContentLength((int) zipFileLength);
             }
 
@@ -174,6 +174,8 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
             long responseByteCount = IOUtils.copy(zipFileInputStream, responseOutputStream);
             responseOutputStream.flush();
             responseOutputStream.close();
+            zipFileInputStream.close();
+            zipFileInputStream = null;
 
             if (s_log.isDebugEnabled()) {
                 s_log.debug("sent " + responseByteCount + " byte(s) for ZIP file " + zipFileName);
@@ -192,7 +194,15 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
 
         } finally {
 
-            zipFileInputStream = null;
+        	if (zipFileInputStream != null) {
+            	try {
+					zipFileInputStream.close();
+					zipFileInputStream = null;
+				} catch (Exception e) {
+	                String msg = "Error closing ZIP input stream : " + e.getMessage();
+	                s_log.error(msg);
+				}
+        	}
 
         }
     }
@@ -207,22 +217,23 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
     }
     
     
-    private void safeDeleteFile( java.io.File targetFile ) {
+    private void safeDeleteFile( File targetFile ) {
     	
-    	try {
-    		
-            if (targetFile != null && targetFile.exists()) {
-                if (!targetFile.delete()) {
+    	if (targetFile != null) {
+        	try {
+                if (targetFile.exists()) {
+                    if (!targetFile.delete()) {
+                    	targetFile.deleteOnExit();
+                    }
+                }
+        	} catch (Exception e) {
+                String msg = "Error safely deleting file " + targetFile + " : " + e.getMessage();
+                s_log.error(msg);
+        	} finally {
+                if (targetFile.exists()) {
                 	targetFile.deleteOnExit();
                 }
-            }
-            
-    	} catch (Exception e) {
-    		
-            if (targetFile != null && targetFile.exists()) {
-            	targetFile.deleteOnExit();
-            }
-            
+        	}
     	}
     }
 

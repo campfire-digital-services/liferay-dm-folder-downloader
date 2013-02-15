@@ -8,9 +8,6 @@
     <parent>
         <artifactId>permeance-parent</artifactId>
         <groupId>au.com.permeance</groupId>
-        <!-- 
-        <version>0.6-SNAPSHOT</version>
-        -->
         <version>0.5</version>        
     </parent>
 
@@ -79,19 +76,5 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
-	<!-- 
-	<repositories>
-		<repository>
-			<id>repocentral</id>
-			<name>Central Repository</name>
-			<url>http://repo.maven.apache.org/maven2</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	-->
 
 </project>

@@ -14,23 +14,16 @@
  */
 package au.com.permeance.liferay.portlet.kernel.util;
 
-import com.liferay.portal.kernel.util.PropsKeys;
-
 
 /**
- * Extension Property Keys.
- * 
- * NOTE: The ExtPropsKeys interface and ExtPropValues class
- *       is based on Liferay's PropsKeys and PropsValues approach to property management.
+ * Hook Property Keys.
  * 
  * @author Tim Telcik <tim.telcik@permeance.com.au>
- * 
- * @see PropsKeys
  */
-public interface ExtPropsKeys {
+public interface HookPropsKeys {
 	
     public static final String DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE = "dl.folder.download.cache.max.age";
     
-    public static final String DL_FOLDER_DOWNLOAD_IGNORE_ERRORS = "dl.folder.download.ignore-errors";
+    public static final String DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME = "dl.folder.download.servlet.context.name";
     
 }
