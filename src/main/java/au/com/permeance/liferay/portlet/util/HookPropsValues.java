@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
  * 
  * @see HookPropsKeys
  */
-public class HookPropsValues {
+public interface HookPropsValues {
 
     public static final int DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE 
     	= GetterUtil.getInteger(PropsUtil.get(HookPropsKeys.DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE));
