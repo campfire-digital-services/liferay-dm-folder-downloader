@@ -21,13 +21,4 @@ not, see <http://www.gnu.org/licenses/>.
 
 	<display-name>liferay-dm-download-folder-hook</display-name>
 
-	<listener>
-		<listener-class>com.liferay.portal.kernel.spring.context.PortletContextLoaderListener</listener-class>
-	</listener>
-
-	<context-param>
-		<param-name>portalContextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext.xml</param-value>
-	</context-param>
-
 </web-app>

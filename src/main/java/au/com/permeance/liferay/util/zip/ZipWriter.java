@@ -12,7 +12,6 @@
  * You should have received a copy of the GNU General Public License along with this program. If
  * not, see <http://www.gnu.org/licenses/>.
  */
-
 package au.com.permeance.liferay.util.zip;
 
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -31,7 +30,6 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FilenameUtils;
 
-
 /**
  * Utility class to create ZIP file.
  *  
@@ -48,9 +46,10 @@ import org.apache.commons.io.FilenameUtils;
 public class ZipWriter {
 
     private final ZipOutputStream zos;
-    private final File zipFile;
-    private final Set<String> allocatedPaths = new HashSet<String>();
 
+    private final File zipFile;
+
+    private final Set<String> allocatedPaths = new HashSet<String>();
 
     public ZipWriter(File file) throws IOException {
         this.zipFile = file;

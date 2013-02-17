@@ -15,7 +15,7 @@
 
 package au.com.permeance.liferay.portlet.documentlibrary.action;
 
-import au.com.permeance.liferay.portlet.documentlibrary.service.DLFolderExportZipServiceUtil;
+import au.com.permeance.liferay.portlet.documentlibrary.service.impl.DLFolderExportZipHelper;
 import au.com.permeance.liferay.portlet.util.HookPropsValues;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,15 +29,11 @@ import com.liferay.portal.kernel.struts.StrutsPortletAction;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.io.File;
@@ -68,20 +64,21 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
     private static final Log LOG = LogFactoryUtil.getLog(DownloadFolderZipAction.class);
 
     private static final String FILE_EXT_SEP = FilenameUtils.EXTENSION_SEPARATOR_STR;
+
     private static final String ZIP_FILE_EXT_NAME = "zip";
+
     private static final String ZIP_FILE_EXT = FILE_EXT_SEP + ZIP_FILE_EXT_NAME;
 
     
     @Override
-    public void serveResource(StrutsPortletAction originalStrutsPortletAction, PortletConfig portletConfig,
-            ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws Exception {
+    public void serveResource(StrutsPortletAction originalStrutsPortletAction, PortletConfig portletConfig, ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws Exception {
 
         long repositoryId = ParamUtil.getLong(resourceRequest, "repositoryId");
         long folderId = ParamUtil.getLong(resourceRequest, "folderId");
 
         try {
 
-            downloadFolder(resourceRequest, resourceResponse);
+        downloadFolder(resourceRequest, resourceResponse);
 
         } catch (Exception e) {
 
@@ -98,49 +95,42 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
     
     protected void downloadFolder(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws Exception {
 
-        ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
-        long groupId = themeDisplay.getScopeGroupId();
         long repositoryId = ParamUtil.getLong(resourceRequest, "repositoryId");
         long folderId = ParamUtil.getLong(resourceRequest, "folderId");
         Folder folder = DLAppServiceUtil.getFolder(folderId);
-        ServiceContext serviceContext = ServiceContextFactory.getInstance(Folder.class.getName(), resourceRequest);
 
         PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
 
         if (!folder.containsPermission(permissionChecker, ActionKeys.VIEW)) {
-        	throw new PrincipalException();
+            throw new PrincipalException();
         }
         
         File tempZipFile = null;
 
         try {
-        	
-        	tempZipFile = createTempZipFile();
-            DLFolderExportZipServiceUtil.exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, tempZipFile);
+
+            tempZipFile = createTempZipFile();
+            DLFolderExportZipHelper.exportFolderToZipFile(repositoryId, folderId, tempZipFile);
             String downloadZipFileName = folder.getName() + ZIP_FILE_EXT;
-            sendZipFile(resourceRequest, resourceResponse, tempZipFile, downloadZipFileName);
+            sendZipFile(resourceResponse, tempZipFile, downloadZipFileName);
 
         } catch (Exception e) {
-        	
-        	String msg = "Error downloading folder " + folderId 
-        				+ " from repository " + repositoryId
-        				+ " : " + e.getMessage();
-        	
-        	LOG.error(msg, e);
-        	
-        	throw new PortalException( msg, e ); 
-        	
+
+            String msg = "Error downloading folder " + folderId
+                        + " from repository " + repositoryId
+                        + " : " + e.getMessage();
+
+            LOG.error(msg, e);
+
+            throw new PortalException( msg, e );
+
         } finally {
-        	
-        	safeDeleteFile(tempZipFile);
-        	tempZipFile = null;
-            
+            safeDeleteFile(tempZipFile);
         }
     }
 
     
-    protected void sendZipFile(ResourceRequest resourceRequest, ResourceResponse resourceResponse, File zipFile, String zipFileName)
-            throws Exception {
+    protected void sendZipFile(ResourceResponse resourceResponse, File zipFile, String zipFileName) throws Exception {
 
         FileInputStream zipFileInputStream = null;
 
@@ -183,58 +173,55 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
 
         } catch (Exception e) {
 
-        	String name = StringPool.BLANK;
-        	if (zipFile != null) {
-        		name = zipFile.getName();
-        	}
-        	
+            String name = StringPool.BLANK;
+            if (zipFile != null) {
+                name = zipFile.getName();
+            }
+
             String msg = "Error sending ZIP file " + name + " : " + e.getMessage();
             LOG.error(msg);
             throw new PortalException(msg, e);
 
         } finally {
 
-        	if (zipFileInputStream != null) {
-            	try {
-					zipFileInputStream.close();
-					zipFileInputStream = null;
-				} catch (Exception e) {
-	                String msg = "Error closing ZIP input stream : " + e.getMessage();
-	                LOG.error(msg);
-				}
-        	}
+            if (zipFileInputStream != null) {
+                try {
+                    zipFileInputStream.close();
+                } catch (Exception e) {
+                    String msg = "Error closing ZIP input stream : " + e.getMessage();
+                    LOG.error(msg);
+                }
+            }
 
         }
     }
     
     
     private File createTempZipFile() throws IOException {
-    	
-    	String tempFilePrefix = PortalUUIDUtil.generate();
-    	String tempFileSuffix = ZIP_FILE_EXT;
-    	File tempFile = File.createTempFile(tempFilePrefix, tempFileSuffix);
-    	return tempFile;
+
+        String tempFilePrefix = PortalUUIDUtil.generate();
+        String tempFileSuffix = ZIP_FILE_EXT;
+        return File.createTempFile(tempFilePrefix, tempFileSuffix);
     }
     
     
     private void safeDeleteFile( File targetFile ) {
-    	
-    	if (targetFile != null) {
-        	try {
+        if (targetFile != null) {
+            try {
                 if (targetFile.exists()) {
                     if (!targetFile.delete()) {
-                    	targetFile.deleteOnExit();
+                        targetFile.deleteOnExit();
                     }
                 }
-        	} catch (Exception e) {
+            } catch (Exception e) {
                 String msg = "Error safely deleting file " + targetFile + " : " + e.getMessage();
                 LOG.error(msg);
-        	} finally {
+            } finally {
                 if (targetFile.exists()) {
-                	targetFile.deleteOnExit();
+                    targetFile.deleteOnExit();
                 }
-        	}
-    	}
+            }
+        }
     }
 
 }

@@ -12,7 +12,6 @@
  * You should have received a copy of the GNU General Public License along with this program. If
  * not, see <http://www.gnu.org/licenses/>.
  */
-
 package au.com.permeance.liferay.portlet.documentlibrary.service.impl;
 
 import au.com.permeance.liferay.util.zip.ZipWriter;
@@ -38,7 +37,6 @@ import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 
-
 /**
  * Document Library Folder Export Helper.
  * 
@@ -54,67 +52,35 @@ public class DLFolderExportZipHelper {
 
     private static final Log LOG = LogFactoryUtil.getLog(DLFolderExportZipHelper.class);
 
-    
-    public static void exportFolderToZipFile(
-    		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, String zipFileName) 
-    	throws PortalException, SystemException
-   	{
-    	
-    	try {
-    		
-    		java.io.File zipFile = new java.io.File(zipFileName);
-        	exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, zipFile);
-        	
-    	} catch (Exception e) {
-    		
-            String msg = "Error exporting folder " + folderId 
-            		+ " from repository " + repositoryId 
-            		+ " to ZIP file " + zipFileName 
-            		+ " : " + e.getMessage();
-    		
-    		LOG.error(msg, e);
-    		
-            if (e instanceof PortalException) {
-                throw (PortalException) e;
-
-            } else if (e instanceof SystemException) {
-                throw (SystemException) e;
-            }
-    	}
-   	}
-    
-    	
-    public static void exportFolderToZipFile(
-    		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, File zipFile) 
-    	throws PortalException, SystemException 
-    {
+    public static void exportFolderToZipFile(long repositoryId, long folderId, File zipFile) throws PortalException, SystemException {
 
         ZipWriter zipWriter = null;
 
         try {
 
             zipWriter = new ZipWriter(zipFile);
-
-            exportFolderToZipWriter(groupId, repositoryId, folderId, serviceContext, zipWriter);
-            
-            zipWriter.close();
+            exportFolderToZipWriter(repositoryId, folderId, zipWriter);
 
         } catch (Exception e) {
 
-        	String fileName = zipFile.getName();
-        	
-            String msg = "Error exporting folder " + folderId 
-            		+ " from repository " + repositoryId 
-            		+ " to ZIP file " + fileName 
-            		+ " : " + e.getMessage();
+            String fileName = zipFile.getName();
+
+            String msg = "Error exporting folder " + folderId
+                    + " from repository " + repositoryId
+                    + " to ZIP file " + fileName
+                    + " : " + e.getMessage();
 
             LOG.error(msg, e);
 
             if (e instanceof PortalException) {
                 throw (PortalException) e;
-
             } else if (e instanceof SystemException) {
                 throw (SystemException) e;
+            }
+        }
+        finally {
+            if (zipWriter != null) {
+                zipWriter.close();
             }
         }
     }
@@ -123,41 +89,36 @@ public class DLFolderExportZipHelper {
     /**
      * Export folder to ZIP writer.
      * 
-     * @param groupId group id
+     *
+     *
      * @param repositoryId source repository containing folder to export
      * @param folderId source folder to export
-     * @param serviceContext service context
      * @param zipWriter destination ZIP writer
-     * 
+     *
      * @throws PortalException
      * @throws SystemException
      * @throws RemoteException
      */
-    public static void exportFolderToZipWriter(
-    		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, ZipWriter zipWriter) 
-    	throws PortalException, SystemException 
-    {
+    public static void exportFolderToZipWriter(long repositoryId, long folderId, ZipWriter zipWriter) throws PortalException, SystemException {
 
         try {
 
             Folder folder = DLAppServiceUtil.getFolder(folderId);
-
-            exportFolderToZipWriter(groupId, repositoryId, folder, StringPool.BLANK, serviceContext, zipWriter);
+            exportFolderToZipWriter(folder, StringPool.BLANK, zipWriter);
 
         } catch (Exception e) {
 
             String zipWriterLabel = zipWriter.getPath();
 
             String msg = "Error exporting folder " + folderId 
-            		+ " from repository " + repositoryId 
-            		+ " to ZIP writer " + zipWriterLabel 
-            		+ " : " + e.getMessage();
+                    + " from repository " + repositoryId
+                    + " to ZIP writer " + zipWriterLabel
+                    + " : " + e.getMessage();
 
             LOG.error(msg, e);
 
             if (e instanceof PortalException) {
                 throw (PortalException) e;
-
             } else if (e instanceof SystemException) {
                 throw (SystemException) e;
             }
@@ -168,47 +129,42 @@ public class DLFolderExportZipHelper {
     /**
      * Export folder to ZIP writer.
      * 
-     * @param groupId group id
-     * @param repositoryId source repository containing folder to export
+     *
+     *
+     *
      * @param folder source folder to export
      * @param folderPath source folder path to export
-     * @param serviceContext service context
      * @param zipWriter destination ZIP writer
-     * 
+     *
      * @throws PortalException
      * @throws SystemException
      * @throws RemoteException
      */    
-    public static void exportFolderToZipWriter(
-    		long groupId, long repositoryId, Folder folder, String folderPath, ServiceContext serviceContext, ZipWriter zipWriter) 
-    	throws PortalException, SystemException 
-    {
+    public static void exportFolderToZipWriter(Folder folder, String folderPath, ZipWriter zipWriter) throws PortalException, SystemException {
 
         // Export file entries in folder to ZIP writer
 
-        List<FileEntry> fileEntryList = DLAppServiceUtil.getFileEntries(folder.getRepositoryId(), folder.getFolderId(), QueryUtil.ALL_POS,
-                QueryUtil.ALL_POS, null);
+        List<FileEntry> fileEntryList = DLAppServiceUtil.getFileEntries(folder.getRepositoryId(), folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
         for (FileEntry fileEntry : fileEntryList) {
             try {
                 exportFileEntryToZipWriter(fileEntry, folderPath, zipWriter);
             } catch (Exception e) {
-            	String msg = "Error exporting file entry to ZIP file : " + e.getMessage();
-            	LOG.error(msg, e);
-            	throw new PortalException(msg, e);
+                String msg = "Error exporting file entry to ZIP file : " + e.getMessage();
+                LOG.error(msg, e);
+                throw new PortalException(msg, e);
             }
         }
 
         
         // Export sub-folders in folder to ZIP writer
 
-        List<Folder> subFolderList = DLAppServiceUtil.getFolders(folder.getRepositoryId(), folder.getFolderId(), QueryUtil.ALL_POS,
-                QueryUtil.ALL_POS, null);
+        List<Folder> subFolderList = DLAppServiceUtil.getFolders(folder.getRepositoryId(), folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
         for (Folder subFolder : subFolderList) {
             String subFolderName = subFolder.getName();
             String subFolderPath = folderPath + subFolderName + StringPool.FORWARD_SLASH;
-            exportFolderToZipWriter(groupId, repositoryId, subFolder, subFolderPath, serviceContext, zipWriter);
+            exportFolderToZipWriter(subFolder, subFolderPath, zipWriter);
         }
     }
 
@@ -224,9 +180,7 @@ public class DLFolderExportZipHelper {
      * @throws SystemException
      * @throws IOException
      */
-    public static void exportFileEntryToZipWriter(FileEntry fileEntry, String folderPath, ZipWriter zipWriter) 
-    		throws PortalException, SystemException, IOException 
-    {
+    public static void exportFileEntryToZipWriter(FileEntry fileEntry, String folderPath, ZipWriter zipWriter) throws PortalException, SystemException, IOException {
 
         InputStream fileInputStream = null;
         try {
@@ -239,7 +193,9 @@ public class DLFolderExportZipHelper {
 
             String zipWriterLabel = zipWriter.getPath();
 
-            String msg = "Error exporting file entry " + fileEntry + " to ZIP writer " + zipWriterLabel + " : " + e.getMessage();
+            String msg = "Error exporting file entry " + fileEntry
+                         + " to ZIP writer " + zipWriterLabel
+                         + " : " + e.getMessage();
 
             LOG.error(msg, e);
 
@@ -256,8 +212,7 @@ public class DLFolderExportZipHelper {
         } finally {
             try {
                 if (fileInputStream != null) {
-                	fileInputStream.close();
-                	fileInputStream = null;
+                    fileInputStream.close();
                 }
             } catch (Exception e) {
             }
