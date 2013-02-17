@@ -52,7 +52,7 @@ import org.apache.commons.io.FilenameUtils;
  */
 public class DLFolderExportZipHelper {
 
-    private static final Log s_log = LogFactoryUtil.getLog(DLFolderExportZipHelper.class);
+    private static final Log LOG = LogFactoryUtil.getLog(DLFolderExportZipHelper.class);
 
     
     public static void exportFolderToZipFile(
@@ -72,7 +72,7 @@ public class DLFolderExportZipHelper {
             		+ " to ZIP file " + zipFileName 
             		+ " : " + e.getMessage();
     		
-    		s_log.error( msg, e );
+    		LOG.error(msg, e);
     		
             if (e instanceof PortalException) {
                 throw (PortalException) e;
@@ -108,7 +108,7 @@ public class DLFolderExportZipHelper {
             		+ " to ZIP file " + fileName 
             		+ " : " + e.getMessage();
 
-            s_log.error(msg, e);
+            LOG.error(msg, e);
 
             if (e instanceof PortalException) {
                 throw (PortalException) e;
@@ -153,7 +153,7 @@ public class DLFolderExportZipHelper {
             		+ " to ZIP writer " + zipWriterLabel 
             		+ " : " + e.getMessage();
 
-            s_log.error(msg, e);
+            LOG.error(msg, e);
 
             if (e instanceof PortalException) {
                 throw (PortalException) e;
@@ -194,7 +194,7 @@ public class DLFolderExportZipHelper {
                 exportFileEntryToZipWriter(fileEntry, folderPath, zipWriter);
             } catch (Exception e) {
             	String msg = "Error exporting file entry to ZIP file : " + e.getMessage();
-            	s_log.error(msg, e);
+            	LOG.error(msg, e);
             	throw new PortalException(msg, e);
             }
         }
@@ -241,7 +241,7 @@ public class DLFolderExportZipHelper {
 
             String msg = "Error exporting file entry " + fileEntry + " to ZIP writer " + zipWriterLabel + " : " + e.getMessage();
 
-            s_log.error(msg, e);
+            LOG.error(msg, e);
 
             if (e instanceof PortalException) {
                 throw (PortalException) e;
@@ -303,8 +303,8 @@ public class DLFolderExportZipHelper {
                 counter++;
             }
 
-            if (s_log.isDebugEnabled()) {
-                s_log.debug(oldZipEntryName + " already exists in ZIP file, renaming to " + zipEntryName);
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(oldZipEntryName + " already exists in ZIP file, renaming to " + zipEntryName);
             }
         }
 

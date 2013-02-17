@@ -65,7 +65,7 @@ import org.apache.commons.lang.StringUtils;
  */
 public class DownloadFolderZipAction extends BaseStrutsPortletAction {
 
-    private static final Log s_log = LogFactoryUtil.getLog(DownloadFolderZipAction.class);
+    private static final Log LOG = LogFactoryUtil.getLog(DownloadFolderZipAction.class);
 
     private static final String FILE_EXT_SEP = FilenameUtils.EXTENSION_SEPARATOR_STR;
     private static final String ZIP_FILE_EXT_NAME = "zip";
@@ -86,7 +86,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
         } catch (Exception e) {
 
             String msg = "Error downloading folder " + folderId + " from repository " + repositoryId + " : " + e.getMessage();
-            s_log.error(msg, e);
+            LOG.error(msg, e);
             
             SessionErrors.add(resourceRequest, e.getClass().getName());
             resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "" + HttpStatus.SC_MOVED_TEMPORARILY);
@@ -126,7 +126,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
         				+ " from repository " + repositoryId
         				+ " : " + e.getMessage();
         	
-        	s_log.error( msg ,e );
+        	LOG.error(msg, e);
         	
         	throw new PortalException( msg, e ); 
         	
@@ -177,8 +177,8 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
             zipFileInputStream.close();
             zipFileInputStream = null;
 
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("sent " + responseByteCount + " byte(s) for ZIP file " + zipFileName);
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("sent " + responseByteCount + " byte(s) for ZIP file " + zipFileName);
             }
 
         } catch (Exception e) {
@@ -189,7 +189,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
         	}
         	
             String msg = "Error sending ZIP file " + name + " : " + e.getMessage();
-            s_log.error(msg);
+            LOG.error(msg);
             throw new PortalException(msg, e);
 
         } finally {
@@ -200,7 +200,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
 					zipFileInputStream = null;
 				} catch (Exception e) {
 	                String msg = "Error closing ZIP input stream : " + e.getMessage();
-	                s_log.error(msg);
+	                LOG.error(msg);
 				}
         	}
 
@@ -228,7 +228,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
                 }
         	} catch (Exception e) {
                 String msg = "Error safely deleting file " + targetFile + " : " + e.getMessage();
-                s_log.error(msg);
+                LOG.error(msg);
         	} finally {
                 if (targetFile.exists()) {
                 	targetFile.deleteOnExit();
