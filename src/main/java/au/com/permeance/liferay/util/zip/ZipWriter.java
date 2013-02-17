@@ -46,25 +46,12 @@ import org.apache.commons.io.FilenameUtils;
  * @see ZipWriterFactoryUtil
  */
 public class ZipWriter {
-	
-    private static final String FILE_EXT_SEP = FilenameUtils.EXTENSION_SEPARATOR_STR;
-    private static final String ZIP_FILE_EXT_NAME = "zip";
-    private static final String ZIP_FILE_EXT = FILE_EXT_SEP + ZIP_FILE_EXT_NAME;
-
 
     private ZipOutputStream zos = null;
     private File zipFile = null;
     private final Set<String> allocatedPaths = new HashSet<String>();
 
-    
-    public ZipWriter() throws IOException {
-    	String tempFilePrefix = PortalUUIDUtil.generate();
-    	String tempFileSuffix = ZIP_FILE_EXT;
-    	this.zipFile = File.createTempFile(tempFilePrefix, tempFileSuffix);
-        this.zos = new ZipOutputStream(new FileOutputStream(this.zipFile));
-    }
 
-    
     public ZipWriter(File file) throws IOException {
         this.zipFile = file;
         this.zos = new ZipOutputStream(new FileOutputStream(this.zipFile));
@@ -90,13 +77,7 @@ public class ZipWriter {
         this.allocatedPaths.add(path);
     }
 
-    
-    public File getFile() {
-        close();
-        return this.zipFile;
-    }
 
-    
     public String getPath() {
     	String path = null;
     	if (this.zipFile != null) {
