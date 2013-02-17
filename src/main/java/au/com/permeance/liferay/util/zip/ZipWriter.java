@@ -47,8 +47,8 @@ import org.apache.commons.io.FilenameUtils;
  */
 public class ZipWriter {
 
-    private ZipOutputStream zos = null;
-    private File zipFile = null;
+    private final ZipOutputStream zos;
+    private final File zipFile;
     private final Set<String> allocatedPaths = new HashSet<String>();
 
 
@@ -57,17 +57,12 @@ public class ZipWriter {
         this.zos = new ZipOutputStream(new FileOutputStream(this.zipFile));
     }
 
-    
     public void close() {
         try {
-            if (this.zos != null) {
-                this.zos.close();
-            }
-            if (this.allocatedPaths != null) {
-                this.allocatedPaths.clear();
-            }
+            this.zos.close();
         } catch (Exception e) {
         }
+        this.allocatedPaths.clear();
     }
 
     
@@ -79,14 +74,9 @@ public class ZipWriter {
 
 
     public String getPath() {
-    	String path = null;
-    	if (this.zipFile != null) {
-    		path = this.zipFile.getAbsolutePath(); 
-    	}
-        return path;
+        return this.zipFile.getAbsolutePath();
     }
 
-    
     public boolean hasAllocatedPath(String path) {
         return this.allocatedPaths.contains(path);
     }
