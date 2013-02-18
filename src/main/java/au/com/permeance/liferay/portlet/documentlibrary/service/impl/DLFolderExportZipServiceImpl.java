@@ -33,7 +33,6 @@ import com.liferay.portal.service.ServiceContext;
  * @see DLFolderExportZipHelper
  */
 public class DLFolderExportZipServiceImpl implements DLFolderExportZipService {
-	
 
     public void exportFolderToZipFile(
     		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, String zipFileName)

@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
-import java.rmi.RemoteException;
-
 
 /**
  * Document Library Folder Export ZIP Service.
@@ -31,11 +29,11 @@ public interface DLFolderExportZipService {
 	
     public void exportFolderToZipFile(
     		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, String zipFileName)
-    	throws PortalException, RemoteException, SystemException;
+    	throws PortalException, SystemException;
     
     
     public void exportFolderToZipFile(
     		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, java.io.File zipFile)
-    	throws PortalException, RemoteException, SystemException;    
+    	throws PortalException, SystemException;    
 
 }

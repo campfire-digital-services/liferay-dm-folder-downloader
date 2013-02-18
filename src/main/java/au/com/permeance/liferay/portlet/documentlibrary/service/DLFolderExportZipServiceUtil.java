@@ -15,7 +15,6 @@
 
 package au.com.permeance.liferay.portlet.documentlibrary.service;
 
-import au.com.permeance.liferay.portlet.documentlibrary.service.impl.DLFolderExportZipHelper;
 import au.com.permeance.liferay.portlet.util.HookPropsValues;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
@@ -44,7 +43,8 @@ public class DLFolderExportZipServiceUtil {
     public static void exportFolderToZipFile(long groupId, long repositoryId, long folderId, ServiceContext serviceContext, String zipFileName)
     		throws PortalException, SystemException 
     {
-        DLFolderExportZipHelper.exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, zipFileName);
+    	getService().exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, zipFileName);
+    	
     }
 
     
@@ -52,7 +52,7 @@ public class DLFolderExportZipServiceUtil {
     		long groupId, long repositoryId, long folderId, ServiceContext serviceContext, File zipFile) 
     	throws PortalException, SystemException 
     {
-    	DLFolderExportZipHelper.exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, zipFile);
+    	getService().exportFolderToZipFile(groupId, repositoryId, folderId, serviceContext, zipFile);
     }
 
     
