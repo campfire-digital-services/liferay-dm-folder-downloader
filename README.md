@@ -15,6 +15,7 @@ This project provides a Liferay Portal plugin to download the contents of a Docu
 
 The latest releases are available from [SourceForge](https://sourceforge.net/projects/permeance-apps/files/liferay-documents-and-media-downloader/ "Documents and Media Downloader").
 
+You can also download or install the hook from [Liferay Marketplace](https://www.liferay.com/marketplace/-/mp/application/21674918?_7_WAR_osbportlet_backURL=%2Fmarketplace%2F-%2Fmp%2Fcategory%2F11232561 "DOcuments and Media Downloader")
 
 ## Usage
 
