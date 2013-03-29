@@ -24,13 +24,26 @@ not, see <http://www.gnu.org/licenses/>.
 	-->
 	<display-name>liferay-dm-folder-download-hook</display-name>
 	
-	<listener>
-		<listener-class>com.liferay.portal.kernel.spring.context.PortletContextLoaderListener</listener-class>
-	</listener>
-
 	<context-param>
 		<param-name>portalContextConfigLocation</param-name>
 		<param-value>/WEB-INF/applicationContext.xml</param-value>
-	</context-param>
+	</context-param>	
+
+	<listener>
+		<listener-class>au.com.permeance.liferay.portal.documentlibrary.servlet.FolderActionsMenuHookListener</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>com.liferay.portal.kernel.spring.context.PortletContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- 
+	see StartupServlet comments on why this is being used.
+	 -->	
+	<servlet>
+		<servlet-name>Startup Servlet</servlet-name>
+		<servlet-class>au.com.permeance.liferay.portal.documentlibrary.servlet.StartupServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>	
 
 </web-app>

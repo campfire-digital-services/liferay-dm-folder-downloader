@@ -18,6 +18,7 @@ import au.com.permeance.liferay.portlet.kernel.util.HookPropsKeys;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 
 /**
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
  * @see HookPropsKeys
  */
 public class HookPropsValues {
+	
+    public static String[] DL_FOLDER_ACTIONS_MENU_EXT = StringUtil.split(PropsUtil.get(HookPropsKeys.DL_FOLDER_ACTIONS_MENU_EXT));	
 
     public static final int DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE 
     	= GetterUtil.getInteger(PropsUtil.get(HookPropsKeys.DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE));

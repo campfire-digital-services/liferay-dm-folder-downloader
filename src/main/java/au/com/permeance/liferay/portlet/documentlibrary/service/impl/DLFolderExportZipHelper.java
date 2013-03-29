@@ -251,6 +251,9 @@ public class DLFolderExportZipHelper {
                 
             } else if (e instanceof IOException) {
                 throw (IOException) e;
+                
+            } else {
+                throw new PortalException( msg, e );
             }
             
         } finally {

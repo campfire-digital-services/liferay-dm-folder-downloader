@@ -20,6 +20,7 @@ not, see <http://www.gnu.org/licenses/>.
     <portal-properties>portal.properties</portal-properties>
 	<language-properties>content/Language.properties</language-properties>
 	<custom-jsp-dir>/WEB-INF/custom_jsps</custom-jsp-dir>
+	<custom-jsp-global>true</custom-jsp-global>
     <struts-action>
         <struts-action-path>/document_library/download_folder</struts-action-path>
         <struts-action-impl>au.com.permeance.liferay.portlet.documentlibrary.action.DownloadFolderZipAction</struts-action-impl>

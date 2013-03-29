@@ -16,6 +16,9 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.log.Log" %>
+<%@ page import="com.liferay.portal.kernel.log.LogFactoryUtil" %>
+
 <%
 String randomNamespace = null;
 
@@ -98,13 +101,13 @@ else {
 
 boolean showWhenSingleIcon = false;
 
-if ((row == null) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if (row == null || portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showWhenSingleIcon = true;
 }
 
 boolean view = false;
 
-if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
+if (row == null && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
 	view = true;
 }
 %>
@@ -224,48 +227,28 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 							url="<%= addFolderURL %>"
 						/>
 					</c:if>
+
+					<%
+					//
+					// LPS-33757 - http://issues.liferay.com/browse/LPS-33757
+					//
+					// Include custom menu items
+					final String SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT = "liferay.dl.folder.actions.menu.ext";
+					LOG.debug("folder actions menu ext key: " + SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
+					String menuItemsStr = System.getProperty(SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
+					LOG.debug("menuItemsStr: " + menuItemsStr);
+					String[] menuItems = StringUtil.split(PropsUtil.get(SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT));
+					LOG.debug("menuItems.length: " + menuItems.length);
+					for (String menuItem : menuItems) {
+					    String menuItemJsp = "/html/portlet/document_library/folder_actions_menu_ext/" + menuItem + ".jsp";
+					    LOG.debug("menuItemJsp: " + menuItemJsp);
+					    // request.setAttribute("folder_action::folder", folder);
+					%>					
+						<liferay-util:include page="<%=menuItemJsp %>" />		
+					<%
+					}
+					%>
 					
-				    <!-- Download folder -->
-				    <c:if test="<%= (folder != null) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
-				        <portlet:resourceURL var="downloadResourceURL">
-				            <portlet:param name="struts_action" value="/document_library/download_folder" />
-				            <portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-				            <portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-				        </portlet:resourceURL>
-				
-						<%--
-				        <liferay-ui:icon
-				            image="download"
-				            message='<%= LanguageUtil.get(pageContext, "download-folder") %>'
-				            src='<%= themeDisplay.getPathThemeImages() + "/custom/icons/folder_download.png" %>'
-				            url='<%= downloadResourceURL %>'
-				        />	
-				        --%>
-				        
-				        <%--
-				        <liferay-ui:icon
-				            image="download"
-				            message='<%= LanguageUtil.get(pageContext, "download-folder") %>'
-				            src='<%= themeDisplay.getPathThemeImages() + "/common/download.png" %>'
-				            url='<%= downloadResourceURL %>'
-				        />	
-				        --%>
-				        
-				        <liferay-ui:icon
-				            image="download"
-				            message='<%= LanguageUtil.get(pageContext, "download-folder-as-zip-file") %>'
-				            url='<%= downloadResourceURL %>'
-				        />				        		
-				        
-				        <%--
-				        <% 
-				        	String themeImagesPath = themeDisplay.getPathThemeImages();
-				        %>
-				        <liferay-ui:message key="<%=themeImagesPath%>"></liferay-ui:message>
-				        --%>
-				        	        	
-					</c:if>  
-			
 				</c:when>
 				<c:otherwise>
 
@@ -373,7 +356,7 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 				</liferay-portlet:renderURL>
 
 				<%
-				taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {centered: true, modal: true, width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + UnicodeLanguageUtil.get(pageContext, portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
+				taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {width: 420}, id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + UnicodeLanguageUtil.get(pageContext, portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type") + "', uri:'" + editFileEntryURL.toString() + "'});";
 				%>
 
 				<liferay-ui:icon
@@ -462,7 +445,7 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 	</div>
 </div>
 
-<portlet:renderURL var="viewSlideShowURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" var="viewSlideShowURL">
 	<portlet:param name="struts_action" value="/image_gallery_display/view_slide_show" />
 	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 </portlet:renderURL>
@@ -509,3 +492,7 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 		);
 	}
 </aui:script>
+
+<%!
+private static Log LOG = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.folder_action.jsp");
+%>
