@@ -44,6 +44,6 @@ not, see <http://www.gnu.org/licenses/>.
 		<servlet-name>Startup Servlet</servlet-name>
 		<servlet-class>au.com.permeance.liferay.portal.documentlibrary.servlet.StartupServlet</servlet-class>
 		<load-on-startup>0</load-on-startup>
-	</servlet>	
+	</servlet>
 
 </web-app>
