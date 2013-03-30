@@ -13,9 +13,10 @@ This project provides a Liferay Portal plugin to download the contents of a Docu
 
 ## Downloads
 
-The latest releases are available from [SourceForge](https://sourceforge.net/projects/permeance-apps/files/liferay-documents-and-media-downloader/ "Documents and Media Downloader").
+The latest release is available from [SourceForge - Documents and Media Downloader](https://sourceforge.net/projects/permeance-apps/files/liferay-documents-and-media-downloader/ "Documents and Media Downloader").
 
-You can also download or install the hook from [Liferay Marketplace](https://www.liferay.com/marketplace/-/mp/application/21674918?_7_WAR_osbportlet_backURL=%2Fmarketplace%2F-%2Fmp%2Fcategory%2F11232561 "DOcuments and Media Downloader")
+You can also download or install the hook from [Liferay Marketplace - Documents and Media Downloader](https://www.liferay.com/marketplace/-/mp/application/21674918?_7_WAR_osbportlet_backURL=%2Fmarketplace%2F-%2Fmp%2Fcategory%2F11232561 "Documents and Media Downloader")
+
 
 ## Usage
 
@@ -61,3 +62,7 @@ Deploy "liferay-dm-folder-download-hook-1.0.0.0.war" to "LIFERAY_HOME/deploy" fo
 * Tim Telcik - tim.telcik@permeance.com.au
 * Chun Ho - chun.ho@permeance.com.au
 
+
+## Related Projects
+
+* [GitHub - Sample Liferay Documents and Media Action Menu Extension](https://github.com/permeance/sample-liferay-dm-action-menu-extension "GitHub - Sample Liferay Documents and Media Action Menu Extension").
