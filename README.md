@@ -1,6 +1,6 @@
-# Liferay Documents and Media Folder Download Hook
+# Liferay Documents and Media Folder Downloader
 
-*liferay-dm-folder-download-hook*
+*liferay-dm-folder-downloader*
 
 This project provides a Liferay Portal plugin to download the contents of a Documents and Media folder (and subfolders) as a ZIP file.
 
@@ -22,28 +22,28 @@ You can also download or install the hook from [Liferay Marketplace - Documents 
 
 Step 1. Navigate to Liferay Portal page containing Documents and Media portlet.
 
-![Documents and Media Portlet](/docs/images/dm-portlet-20130209.png "Documents an Media Portlet")
+![Documents and Media Portlet](/docs/images/01-liferay-dm-portlet-local-repos-root-folder-view-20130209-annot.png "Documents an Media Portlet")
 
 Step 2. Click on the "Action" button for a folder and select the "Download Folder (ZIP)" menu item.
 
-![Documents and Media Folder Action Menu](/docs/images/dm-folder-action-menu-20130131-annot.png "Documents an Media Folder Action Menu")
+![Documents and Media Folder Action Menu](/docs/images/02-liferay-dm-portlet-download-folder-action-menu-20130131-annot.png "Documents an Media Folder Action Menu")
 
 Step 3. Open ZIP file or save to local download folder in your web browser.
 
-![Firefox Download File Dialog](/docs/images/firefox-download-file-dialog-20130209.png "Firefox Download File Dialog")
+![Firefox Download File Dialog](/docs/images/03-firefox-download-file-dialog-20130209.png "Firefox Download File Dialog")
 
 
 ## Building
 
 Step 1. Checkout source from GitHub project
 
-    % git  clone  https://github.com/permeance/liferay-dm-folder-download-hook
+    % git clone https://github.com/permeance/liferay-dm-folder-downloader
 
 Step 2. Build and package
 
-    % mvn  -U  clean  package
+    % mvn -U  clean package
 
-This will build "liferay-dm-folder-download-hook-XXX.war" in the targets tolder.
+This will build "liferay-dm-folder-download-hook-X.X.X.X.war" in the targets tolder.
 
 NOTE: You will require JDK 1.6+ and Maven 3.
 
@@ -54,7 +54,7 @@ NOTE: You will require JDK 1.6+ and Maven 3.
 
 eg.
 
-Deploy "liferay-dm-folder-download-hook-1.0.0.0.war" to "LIFERAY_HOME/deploy" folder.
+Deploy "liferay-dm-folder-download-hook-1.0.0.1.war" to "LIFERAY_HOME/deploy" folder.
 
 
 ## Project Team
@@ -65,4 +65,4 @@ Deploy "liferay-dm-folder-download-hook-1.0.0.0.war" to "LIFERAY_HOME/deploy" fo
 
 ## Related Projects
 
-* [GitHub - Sample Liferay Documents and Media Action Menu Extension](https://github.com/permeance/sample-liferay-dm-action-menu-extension "GitHub - Sample Liferay Documents and Media Action Menu Extension").
+* [GitHub - Sample Liferay Documents and Media Action Menu Extension](https://github.com/permeance/sample-liferay-dm-action-menu-extension "GitHub - Sample Liferay Documents and Media Action Menu Extension")
