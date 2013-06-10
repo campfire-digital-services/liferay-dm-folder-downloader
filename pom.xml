@@ -13,7 +13,7 @@
 
 	<groupId>au.com.permeance.utility</groupId>
 	<artifactId>liferay-dm-folder-download-hook</artifactId>
-	<version>1.0.0.1</version>
+	<version>1.0.0.2</version>
 	<packaging>war</packaging>
 
 	<properties>
@@ -77,4 +77,11 @@
 		</dependency>
 	</dependencies>
 
+	<organization>
+		<name>Permeance Technologies</name>
+		<url>http://www.permeance.com.au</url>
+	</organization>
+	<name>Liferay Documents and Media Folder Download Hook Plugin.</name>
+	<description>A hook plugin for Liferay Portal which downloads a folder and all sub-folders and files from a Documents and Media repository as a ZIP file.</description>
+	<url>https://github.com/permeance/liferay-dm-folder-downloader</url>
 </project>
