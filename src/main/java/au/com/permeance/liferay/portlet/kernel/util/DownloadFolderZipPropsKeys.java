@@ -20,9 +20,9 @@ package au.com.permeance.liferay.portlet.kernel.util;
  * 
  * @author Tim Telcik <tim.telcik@permeance.com.au>
  */
-public interface HookPropsKeys {
+public interface DownloadFolderZipPropsKeys {
 	
-    public static final String DL_FOLDER_ACTIONS_MENU_EXT = "dl.folder.actions.menu.ext";	
+    public static final String DL_FOLDER_DOWNLOAD_ACTIONS_MENU_EXT = "dl.folder.download.actions.menu.ext";	
 	
     public static final String DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE = "dl.folder.download.cache.max.age";
     

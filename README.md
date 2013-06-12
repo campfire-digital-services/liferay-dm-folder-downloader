@@ -43,7 +43,7 @@ Step 2. Build and package
 
     % mvn -U  clean package
 
-This will build "liferay-dm-folder-download-hook-X.X.X.X.war" in the targets tolder.
+This will build "liferay-dm-folder-download-hook-A.B.C.D.war" in the targets tolder.
 
 NOTE: You will require JDK 1.6+ and Maven 3.
 
@@ -54,7 +54,7 @@ NOTE: You will require JDK 1.6+ and Maven 3.
 
 eg.
 
-Deploy "liferay-dm-folder-download-hook-1.0.0.1.war" to "LIFERAY_HOME/deploy" folder.
+Deploy "liferay-dm-folder-download-hook-A.B.C.D.war" to "LIFERAY_HOME/deploy" folder.
 
 
 ## Project Team

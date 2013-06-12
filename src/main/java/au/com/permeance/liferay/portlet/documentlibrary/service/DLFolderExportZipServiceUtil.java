@@ -15,7 +15,7 @@
 
 package au.com.permeance.liferay.portlet.documentlibrary.service;
 
-import au.com.permeance.liferay.portlet.util.HookPropsValues;
+import au.com.permeance.liferay.portlet.util.DownloadFolderZipPropsValues;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,7 +59,7 @@ public class DLFolderExportZipServiceUtil {
     public static DLFolderExportZipService getService() {
 
         if (_service == null) {
-        	String servletContextName = HookPropsValues.DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME;
+        	String servletContextName = DownloadFolderZipPropsValues.DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME;
         	if (StringUtils.isEmpty(servletContextName)) {
         		throw new IllegalStateException("Servlet context name is undefined");
         	}

@@ -14,7 +14,7 @@
  */
 package au.com.permeance.liferay.portlet.util;
 
-import au.com.permeance.liferay.portlet.kernel.util.HookPropsKeys;
+import au.com.permeance.liferay.portlet.kernel.util.DownloadFolderZipPropsKeys;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -26,24 +26,24 @@ import com.liferay.portal.kernel.util.StringUtil;
  * 
  * @author Tim Telcik <tim.telcik@permeance.com.au>
  * 
- * @see HookPropsKeys
+ * @see DownloadFolderZipPropsKeys
  */
-public class HookPropsValues {
+public class DownloadFolderZipPropsValues {
 
-	public static String DEFAULT_DL_FOLDER_ACTIONS_MENU_EXT = "download_folder_zip";
+	public static String DEFAULT_DL_FOLDER_DOWNLOAD_ACTIONS_MENU_EXT = "download_folder_zip";
 	
 	public static int DEFAULT_DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE = 0;
 	
 	public static String DEFAULT_DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME = "liferay-dm-folder-download-hook";
 		
-	public static String[] DL_FOLDER_ACTIONS_MENU_EXT 
+	public static String[] DL_FOLDER_DOWNLOAD_ACTIONS_MENU_EXT 
 		= StringUtil.split(
-				GetterUtil.get(PropsUtil.get(HookPropsKeys.DL_FOLDER_ACTIONS_MENU_EXT),DEFAULT_DL_FOLDER_ACTIONS_MENU_EXT));
+				GetterUtil.get(PropsUtil.get(DownloadFolderZipPropsKeys.DL_FOLDER_DOWNLOAD_ACTIONS_MENU_EXT),DEFAULT_DL_FOLDER_DOWNLOAD_ACTIONS_MENU_EXT));
 
     public static final int DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE 
-		= GetterUtil.getInteger(PropsUtil.get(HookPropsKeys.DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE),DEFAULT_DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE);
+		= GetterUtil.getInteger(PropsUtil.get(DownloadFolderZipPropsKeys.DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE),DEFAULT_DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE);
         
     public static final String DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME 
-		= GetterUtil.getString(PropsUtil.get(HookPropsKeys.DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME),DEFAULT_DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME);    
+		= GetterUtil.getString(PropsUtil.get(DownloadFolderZipPropsKeys.DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME),DEFAULT_DL_FOLDER_DOWNLOAD_SERVLET_CONTEXT_NAME);    
     
 }

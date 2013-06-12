@@ -16,7 +16,7 @@
 package au.com.permeance.liferay.portlet.documentlibrary.action;
 
 import au.com.permeance.liferay.portlet.documentlibrary.service.DLFolderExportZipServiceUtil;
-import au.com.permeance.liferay.portlet.util.HookPropsValues;
+import au.com.permeance.liferay.portlet.util.DownloadFolderZipPropsValues;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -153,7 +153,7 @@ public class DownloadFolderZipAction extends BaseStrutsPortletAction {
             String zipFileMimeType = MimeTypesUtil.getContentType(zipFileName);
             resourceResponse.setContentType(zipFileMimeType);
 
-            int folderDownloadCacheMaxAge = HookPropsValues.DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE;
+            int folderDownloadCacheMaxAge = DownloadFolderZipPropsValues.DL_FOLDER_DOWNLOAD_CACHE_MAX_AGE;
             if (folderDownloadCacheMaxAge > 0) {
                 String cacheControlValue = "max-age=" + folderDownloadCacheMaxAge + ", must-revalidate";
                 resourceResponse.addProperty(HttpHeaders.CACHE_CONTROL, cacheControlValue);

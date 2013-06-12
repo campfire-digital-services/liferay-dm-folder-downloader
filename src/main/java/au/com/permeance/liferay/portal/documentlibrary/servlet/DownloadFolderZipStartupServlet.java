@@ -34,24 +34,24 @@ import javax.servlet.http.HttpServlet;
  * 
  * @author Chun Ho <chun.ho@permeance.com.au>
  */
-public class StartupServlet extends HttpServlet {
+public class DownloadFolderZipStartupServlet extends HttpServlet {
 
     private static final long serialVersionUID = -6917677483398490295L;
     
-    private static final Log LOG = LogFactoryUtil.getLog(StartupServlet.class);
+    private static final Log LOG = LogFactoryUtil.getLog(DownloadFolderZipStartupServlet.class);
     
 
     @Override
     public void init(final ServletConfig config) throws ServletException {
     	LOG.debug("init");
         super.init(config);
-        FolderActionsMenuHookListener.startApplication();
+        DownloadFolderZipActionsMenuHookListener.startApplication();
     }
 
     @Override
     public void destroy() {
     	LOG.debug("destroy");
-        FolderActionsMenuHookListener.stopApplication();
+        DownloadFolderZipActionsMenuHookListener.stopApplication();
         super.destroy();
     }
 
