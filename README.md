@@ -7,8 +7,6 @@ This project provides a Liferay Portal plugin to download the contents of a Docu
 
 ## Supported Products
 
-* Liferay Portal 6.1 CE GA2 (6.1.1+)
-* Liferay Portal 6.1 EE GA2 (6.1.20+)
 * Liferay Portal 6.2 CE GA1 (6.2.0+)
 * Liferay Portal 6.2 EE GA1 (6.2.10+)
 
