@@ -7,8 +7,15 @@ This project provides a Liferay Portal plugin to download the contents of a Docu
 
 ## Supported Products
 
-* Liferay Portal 6.2 CE GA1 (6.2.0+)
-* Liferay Portal 6.2 EE GA1 (6.2.10+)
+### GitHub Project Master and Branch 6.2.x
+
+* Liferay Portal 6.2 CE : 6.2 CE GA1 (6.2.0+)
+* Liferay Portal 6.2 EE : 6.2 EE GA1 (6.2.10+)
+
+### GitHub Project Branch 6.1.x
+
+* Liferay Portal 6.1 CE : 6.1 CE GA2, GA3 (6.1.1+)
+* Liferay Portal 6.1 CE : 6.1 EE GA2, GA3 (6.1.20+)
 
 
 ## Downloads
@@ -36,6 +43,27 @@ Step 3. Open ZIP file or save to local download folder in your web browser.
 ## Building
 
 Step 1. Checkout source from GitHub project
+
+Step 1.1. Checkout master from GitHub project
+
+    NOTE: GitHub master and branch 6.2.x should always be the same.
+
+    $ md work
+    $ cd work
+    $ md master
+    $ git clone https://github.com/permeance/liferay-dm-folder-downloader
+    Cloning into 'liferay-dm-folder-downloader'...
+    remote: Counting objects: 518, done.
+    remote: Compressing objects: 100% (223/223), done.
+    remote: Total 518 (delta 173), reused 502 (delta 157)
+    Receiving objects: 100% (518/518), 622.65 KiB | 273.00 KiB/s, done.
+    Resolving deltas: 100% (173/173), done.
+    Checking connectivity... done
+
+Step 1.2. Checkout branch 6.1.x or 6.2.x from GitHub project
+
+    NOTE: This sample shows checkout for branch 6.2.x. 
+          The same process applies for 6.1.x
 
     % md work
     % cd work
