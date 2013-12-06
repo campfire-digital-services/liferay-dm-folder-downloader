@@ -37,11 +37,29 @@ Step 3. Open ZIP file or save to local download folder in your web browser.
 
 Step 1. Checkout source from GitHub project
 
+    % md work
+    % cd work
+    % md -p liferay-dm-folder-downloader/branches/6.1.x
+    % cd liferay-dm-folder-downloader/branches/6.1.x
     % git clone https://github.com/permeance/liferay-dm-folder-downloader
+    Cloning into 'liferay-dm-folder-downloader'...
+    remote: Counting objects: 475, done.
+    remote: Compressing objects: 100% (199/199), done.
+    remote: Total 475 (delta 151), reused 470 (delta 146)
+    Receiving objects: 100% (475/475), 618.21 KiB | 161.00 KiB/s, done.
+    Resolving deltas: 100% (151/151), done.
+    Checking connectivity... done
+    % cd liferay-dm-folder-downloader
+    % git branch 6.1.x
+    % git checkout 6.1.x
+    Switched to branch '6.1.x'
+    % git status
+    # On branch 6.1.x
+    nothing to commit, working directory clean
 
 Step 2. Build and package
 
-    % mvn -U  clean package
+    % mvn -U clean package
 
 This will build "liferay-dm-folder-download-hook-A.B.C.war" in the targets tolder.
 
