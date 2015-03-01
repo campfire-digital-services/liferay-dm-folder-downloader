@@ -1,6 +1,6 @@
 <%--
 /**
-* Copyright (C) 2013 Permeance Technologies
+* Copyright (C) 2013-2015 Permeance Technologies
 *
 * This program is free software: you can redistribute it and/or modify it under the terms of the
 * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -72,7 +72,7 @@ else {
 
 int status = WorkflowConstants.STATUS_APPROVED;
 
-if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
 
@@ -101,15 +101,21 @@ else {
 
 boolean showWhenSingleIcon = false;
 
-if ((row == null) || portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
+
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+
+if ((row == null) || dlVisualizationHelper.isShowWhenSingleIconActionButton()) {
 	showWhenSingleIcon = true;
 }
 
 boolean view = false;
 
-if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
+if ((row == null) && ((portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlVisualizationHelper.isShowMinimalActionsButton()) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
 	view = true;
 }
+
+String iconMenuId = null;
 %>
 
 <%
@@ -121,8 +127,8 @@ if (LOG.isDebugEnabled()) {
 %>
 
 <liferay-util:buffer var="iconMenuExt">
-	<c:if test="<%= showActions %>">
-	    <c:if test="<%= (folder != null) && !folder.isMountPoint() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW) %>">
+	<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">	
+		<c:if test="<%= hasViewPermission %>">
 	        <portlet:resourceURL var="downloadResourceURL">
 	            <portlet:param name="struts_action" value="/document_library/download_folder" />
 	            <portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
@@ -130,8 +136,9 @@ if (LOG.isDebugEnabled()) {
 	        </portlet:resourceURL>
 	        
 	        <liferay-ui:icon
-	            image="download"
+	            iconCssClass="download"
 	            message='<%= LanguageUtil.get(pageContext, "download-folder-as-zip-file") %>'
+				method="get"	            
 	            url='<%= downloadResourceURL %>'
 	        />				        		
 		</c:if>

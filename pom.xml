@@ -17,10 +17,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<liferay.version>6.2.0-GA1</liferay.version>
-		<!--
-		<liferay.version>6.2.10-GA1</liferay.version>
-		-->
+		<liferay.version>7.0.0-m4</liferay.version>
 	</properties>
 
 	<dependencies>
@@ -88,3 +85,4 @@
 	<description>A hook plugin for Liferay Portal which downloads a folder and all sub-folders and files from a Documents and Media repository as a ZIP file.</description>
 	<url>https://github.com/permeance/liferay-dm-folder-downloader</url>
 </project>
+

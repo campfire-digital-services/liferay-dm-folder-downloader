@@ -7,6 +7,10 @@ This project provides a Liferay Portal plugin to download the contents of a Docu
 
 ## Supported Products
 
+### GitHub Project Branch 7.0.x
+
+* Liferay Portal 7.0 CE : 7.0 CE M4 (7.0.0+)
+
 ### GitHub Project Master and Branch 6.2.x
 
 * Liferay Portal 6.2 CE : 6.2 CE GA1 (6.2.0+)
