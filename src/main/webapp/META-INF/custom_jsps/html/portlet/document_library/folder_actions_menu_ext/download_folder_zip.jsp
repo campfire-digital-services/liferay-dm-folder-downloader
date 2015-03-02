@@ -17,6 +17,9 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.log.Log" %>
+<%@ page import="com.liferay.portal.kernel.log.LogFactoryUtil" %>
+
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%
@@ -127,6 +130,12 @@ if (LOG.isDebugEnabled()) {
 %>
 
 <liferay-util:buffer var="iconMenuExt">
+
+	<%
+	boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
+	LOG.debug("hasViewPermission: " + hasViewPermission);	
+	%>
+
 	<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">	
 		<c:if test="<%= hasViewPermission %>">
 	        <portlet:resourceURL var="downloadResourceURL">

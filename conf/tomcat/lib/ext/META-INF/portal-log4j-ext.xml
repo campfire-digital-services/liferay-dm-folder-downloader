@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} %-5p [%t][%c{1}:%L] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="FILE" class="org.apache.log4j.rolling.RollingFileAppender">
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="FileNamePattern" value="@liferay.home@/logs/liferay@spi.id@.%d{yyyy-MM-dd}.log" />
+		</rollingPolicy>
+
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} %-5p [%t][%c{1}:%L] %m%n" />
+		</layout>
+	</appender>
+
+	<category name="com.liferay.portal.kernel.util.JavaDetector">
+		<priority value="ALL" />
+	</category>
+
+	<category name="com.liferay.portal.kernel.util.ServerDetector">
+		<priority value="ALL" />
+	</category>
+
+	<category name="com.liferay.portal.spring.hibernate.DialectDetector">
+		<priority value="ALL" />
+	</category>
+
+	<category name="au.com.permeance.liferay.portal.servlet.filters.request.WebRequestLoggerFilter">
+		<priority value="ALL" />
+	</category>
+
+	<category name="portal-web.docroot.html.portlet.document_library.folder_actions_menu_ext.download_folder_zip.jsp">
+		<priority value="ALL" />
+	</category>
+
+	<category name="portal-web.docroot.html.portlet.document_library.folder_action.jsp">
+		<priority value="ALL" />
+	</category>
+
+	<category name="au.com.permeance.liferay.portal.documentlibrary.servlet">
+		<priority value="ALL" />
+	</category>
+
+	<category name="au.com.permeance.liferay.portlet.documentlibrary.action.DownloadFolderZipAction">
+		<priority value="ALL" />
+	</category>
+
+	<root>
+		<priority value="INFO" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</log4j:configuration>
+

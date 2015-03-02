@@ -123,6 +123,7 @@ String iconMenuId = null;
 
 		<%
 		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
+		LOG.debug("hasViewPermission: " + hasViewPermission);		
 		%>
 
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
@@ -140,6 +141,32 @@ String iconMenuId = null;
 					url="<%= downloadURL %>"
 				/>
 			</c:if>
+
+			<c:if test="<%= hasViewPermission %>">
+				<%
+				//
+				// LPS-33757 - http://issues.liferay.com/browse/LPS-33757
+				// TODO - Review https://issues.liferay.com/browse/LPS-49046
+				// TOOO - Review https://issues.liferay.com/browse/LPS-49146
+				// TODO - Review https://issues.liferay.com/browse/LPS-49529
+				//
+				// Include custom menu items
+				final String SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT = "liferay.dl.folder.actions.menu.ext";
+				LOG.debug("folder actions menu ext key: " + SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
+				String menuItemsStr = System.getProperty(SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
+				LOG.debug("menuItemsStr: " + menuItemsStr);
+				String[] menuItems = StringUtil.split(PropsUtil.get(SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT));
+				LOG.debug("menuItems.length: " + menuItems.length);
+				for (String menuItem : menuItems) {
+				    String menuItemJsp = "/html/portlet/document_library/folder_actions_menu_ext/" + menuItem + ".jsp";
+				    LOG.debug("menuItemJsp: " + menuItemJsp);
+				    // request.setAttribute("folder_action::folder", folder);
+				%>					
+					<liferay-util:include page="<%=menuItemJsp%>" />	
+				<%
+				}
+				%>
+			</c:if>					
 
 			<c:choose>
 				<c:when test="<%= folder != null %>">
@@ -253,31 +280,6 @@ String iconMenuId = null;
 						%>
 
 					</c:if>
-
-					<%
-					//
-					// LPS-33757 - http://issues.liferay.com/browse/LPS-33757
-					// TODO - Review https://issues.liferay.com/browse/LPS-49046
-					// TOOO - Review https://issues.liferay.com/browse/LPS-49146
-					// TODO - Review https://issues.liferay.com/browse/LPS-49529
-					//
-					// Include custom menu items
-					final String SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT = "liferay.dl.folder.actions.menu.ext";
-					LOG.debug("folder actions menu ext key: " + SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
-					String menuItemsStr = System.getProperty(SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
-					LOG.debug("menuItemsStr: " + menuItemsStr);
-					String[] menuItems = StringUtil.split(PropsUtil.get(SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT));
-					LOG.debug("menuItems.length: " + menuItems.length);
-					for (String menuItem : menuItems) {
-					    String menuItemJsp = "/html/portlet/document_library/folder_actions_menu_ext/" + menuItem + ".jsp";
-					    LOG.debug("menuItemJsp: " + menuItemJsp);
-					    // request.setAttribute("folder_action::folder", folder);
-					%>					
-						<liferay-util:include page="<%=menuItemJsp %>" />		
-					<%
-					}
-					%>
-					
 				</c:when>
 				<c:otherwise>
 
