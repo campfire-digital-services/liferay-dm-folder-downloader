@@ -146,7 +146,7 @@ if (LOG.isDebugEnabled()) {
 	        
 	        <liferay-ui:icon
 	            iconCssClass="download"
-	            message='<%= LanguageUtil.get(pageContext, "download-folder-as-zip-file") %>'
+	            message="download-folder-as-zip-file"
 				method="get"	            
 	            url='<%= downloadResourceURL %>'
 	        />				        		
