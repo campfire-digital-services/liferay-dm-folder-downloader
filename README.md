@@ -103,6 +103,11 @@ eg.
 Deploy "liferay-dm-folder-download-hook-A.B.C.war" to "LIFERAY_HOME/deploy" folder.
 
 
+## License
+
+The Liferay Documents and Media Folder Downloader project is licensed according to the terms of the [GNU General Public License Version 3.0](http://www.gnu.org/licenses/gpl-3.0.en.html).
+
+
 ## Project Team
 
 * Tim Telcik - tim.telcik@permeance.com.au
