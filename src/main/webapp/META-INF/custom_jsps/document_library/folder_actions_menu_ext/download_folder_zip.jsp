@@ -1,6 +1,6 @@
 <%--
 /**
-* Copyright (C) 2013-2015 Permeance Technologies
+* Copyright (C) 2013-present Permeance Technologies. All rights reserved.
 *
 * This program is free software: you can redistribute it and/or modify it under the terms of the
 * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -15,21 +15,17 @@
 */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+
+<%@ include file="/document_library/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.log.Log" %>
 <%@ page import="com.liferay.portal.kernel.log.LogFactoryUtil" %>
 
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
-
 <%
 String randomNamespace = null;
 
-if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_folder_action") + StringPool.UNDERLINE;
-}
-else if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
-	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_display_folder_action") + StringPool.UNDERLINE;
 }
 else {
 	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_image_gallery_display_folder_action") + StringPool.UNDERLINE;
@@ -41,8 +37,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 Folder folder = null;
 
-long folderId = 0;
-
 long repositoryId = 0;
 
 if (row != null) {
@@ -51,26 +45,26 @@ if (row != null) {
 	if (result instanceof Folder) {
 		folder = (Folder)result;
 
-		folderId = folder.getFolderId();
-
 		repositoryId = folder.getRepositoryId();
 	}
 }
 else {
-	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-		folder = (Folder)request.getAttribute("view.jsp-folder");
-
-		folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+	if (portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+		folder = (Folder)request.getAttribute("info_panel.jsp-folder");
 
 		repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 	}
 	else {
-		folder = (Folder)request.getAttribute("view_entries.jsp-folder");
-
-		folderId = GetterUtil.getLong((String)request.getAttribute("view_entries.jsp-folderId"));
+		folder = (Folder)request.getAttribute("info_panel.jsp-folder");
 
 		repositoryId = GetterUtil.getLong((String)request.getAttribute("view_entries.jsp-repositoryId"));
 	}
+}
+
+long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+if (folder != null) {
+	folderId = folder.getFolderId();
 }
 
 int status = WorkflowConstants.STATUS_APPROVED;
@@ -95,30 +89,20 @@ if (folder != null) {
 	showPermissionsURL = DLFolderPermission.contains(permissionChecker, folder, ActionKeys.PERMISSIONS);
 }
 else {
-	modelResource = "com.liferay.portlet.documentlibrary";
+	modelResource = "com.liferay.document.library";
 	modelResourceDescription = themeDisplay.getScopeGroupName();
 	resourcePrimKey = String.valueOf(scopeGroupId);
 
 	showPermissionsURL = DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 }
 
-boolean showWhenSingleIcon = false;
-
-DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
-
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-
-if ((row == null) || dlVisualizationHelper.isShowWhenSingleIconActionButton()) {
-	showWhenSingleIcon = true;
-}
 
 boolean view = false;
 
-if ((row == null) && ((portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlVisualizationHelper.isShowMinimalActionsButton()) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
+if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 	view = true;
 }
-
-String iconMenuId = null;
 %>
 
 <%
@@ -133,7 +117,7 @@ if (LOG.isDebugEnabled()) {
 
 	<%
 	boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
-	LOG.debug("hasViewPermission: " + hasViewPermission);	
+	LOG.debug("hasViewPermission: " + hasViewPermission);		
 	%>
 
 	<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">	
@@ -157,5 +141,5 @@ if (LOG.isDebugEnabled()) {
 <%= iconMenuExt %> 
 
 <%!
-private static Log LOG = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.folder_actions_menu_ext.download_folder_zip.jsp");
+private static Log LOG = LogFactoryUtil.getLog("portal-web.docroot.document_library.folder_actions_menu_ext.download_folder_zip.jsp");
 %>

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013-2015 Permeance Technologies
+ * Copyright (C) 2013-present Permeance Technologies. ALl rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -14,12 +14,12 @@
  */
 package au.com.permeance.liferay.portal.documentlibrary.servlet;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 
 /**

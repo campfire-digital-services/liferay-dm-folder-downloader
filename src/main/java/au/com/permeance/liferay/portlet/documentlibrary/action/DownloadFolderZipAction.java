@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013-2015 Permeance Technologies
+ * Copyright (C) 2013-present Permeance Technologies. All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -15,31 +15,6 @@
 
 package au.com.permeance.liferay.portlet.documentlibrary.action;
 
-import au.com.permeance.liferay.portlet.documentlibrary.service.DLFolderExportZipServiceUtil;
-import au.com.permeance.liferay.portlet.util.DownloadFolderZipPropsValues;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.struts.BaseStrutsPortletAction;
-import com.liferay.portal.kernel.struts.StrutsPortletAction;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -53,6 +28,31 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.struts.BaseStrutsPortletAction;
+import com.liferay.portal.kernel.struts.StrutsPortletAction;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+
+import au.com.permeance.liferay.portlet.documentlibrary.service.DLFolderExportZipServiceUtil;
+import au.com.permeance.liferay.portlet.util.DownloadFolderZipPropsValues;
 
 
 /**

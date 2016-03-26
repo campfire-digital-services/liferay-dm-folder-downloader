@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013-2015 Permeance Technologies
+ * Copyright (C) 2013-present Permeance Technologies. ALl rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -14,20 +14,20 @@
  */
 package au.com.permeance.liferay.portal.documentlibrary.servlet;
 
-import au.com.permeance.liferay.portlet.kernel.util.HookSysPropsKeys;
-import au.com.permeance.liferay.portlet.util.DownloadFolderZipPropsValues;
-import au.com.permeance.liferay.portlet.util.StringUtilHelper;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import au.com.permeance.liferay.portlet.kernel.util.HookSysPropsKeys;
+import au.com.permeance.liferay.portlet.util.DownloadFolderZipPropsValues;
+import au.com.permeance.liferay.portlet.util.StringUtilHelper;
 
 
 /**

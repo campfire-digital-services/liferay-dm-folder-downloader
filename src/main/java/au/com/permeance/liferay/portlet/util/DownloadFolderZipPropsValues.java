@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013-2015 Permeance Technologies
+ * Copyright (C) 2013-present Permeance Technologies. All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -14,11 +14,11 @@
  */
 package au.com.permeance.liferay.portlet.util;
 
-import au.com.permeance.liferay.portlet.kernel.util.DownloadFolderZipPropsKeys;
-
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import au.com.permeance.liferay.portlet.kernel.util.DownloadFolderZipPropsKeys;
 
 
 /**

@@ -9,7 +9,7 @@ This project provides a Liferay Portal plugin to download the contents of a Docu
 
 ### GitHub Project Branch 7.0.x
 
-* Liferay Portal 7.0 CE : 7.0 CE M4 (7.0.0+)
+* Liferay Portal 7.0 CE : 7.0 CE B8 (7.0.0+)
 
 ### GitHub Project Master and Branch 6.2.x
 
@@ -50,7 +50,7 @@ Step 1. Checkout source from GitHub project
 
 Step 1.1. Checkout master from GitHub project
 
-    NOTE: GitHub master and branch 6.2.x should always be the same.
+    NOTE: GitHub master and branch 7.0.x should always be the same.
 
     $ md work
     $ cd work

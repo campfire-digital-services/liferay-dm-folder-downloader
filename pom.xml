@@ -17,7 +17,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<liferay.version>7.0.0-m4</liferay.version>
+		<liferay.version>7.0.0-b8</liferay.version>
 	</properties>
 
 	<dependencies>

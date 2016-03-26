@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013-2015 Permeance Technologies
+ * Copyright (C) 2013-present Permeance Technologies. All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -15,21 +15,6 @@
 
 package au.com.permeance.liferay.portlet.documentlibrary.service.impl;
 
-import au.com.permeance.liferay.util.zip.ZipWriter;
-
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,6 +22,21 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
+
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+
+import au.com.permeance.liferay.util.zip.ZipWriter;
 
 
 /**

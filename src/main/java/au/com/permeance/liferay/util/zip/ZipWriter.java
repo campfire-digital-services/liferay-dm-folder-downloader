@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013-2015 Permeance Technologies
+ * Copyright (C) 2013-present Permeance Technologies. All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
@@ -15,11 +15,6 @@
 
 package au.com.permeance.liferay.util.zip;
 
-import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.kernel.zip.ZipWriterFactory;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,6 +25,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FilenameUtils;
+
+import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
+import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
 
 /**
