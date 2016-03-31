@@ -79,7 +79,7 @@ Step 2. Build and package
 
     % mvn -U clean package
 
-This will build "liferay-dm-folder-download-hook-A.B.C.war" in the targets tolder.
+This will build "liferay-dm-folder-download-hook-A.B.C.war" in the project target tolder.
 
 NOTE: You will require JDK 1.6+ and Maven 3.
 
