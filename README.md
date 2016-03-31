@@ -50,8 +50,6 @@ Step 1. Checkout source from GitHub project
 
 e.g. Checkout master from GitHub project
 
-NOTE: GitHub master and branch 7.0.x should always be the same.
-
     $ git clone https://github.com/permeance/liferay-dm-folder-downloader
     Cloning into 'liferay-dm-folder-downloader'...
     . . .
@@ -61,8 +59,6 @@ NOTE: GitHub master and branch 7.0.x should always be the same.
     On branch master
 
 e.g. Checkout branch 6.1.x, 6.2.x or 7.0.x from GitHub project
-
-NOTE: This sample shows checkout for branch 6.2.x. The same process applies for 6.1.x or 7.0.x
 
     % git clone https://github.com/permeance/liferay-dm-folder-downloader
     Cloning into 'liferay-dm-folder-downloader'...
