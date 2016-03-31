@@ -108,8 +108,20 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 
 		<%
+		//
+		// TEST LPS-33757 - http://issues.liferay.com/browse/LPS-33757
+		//
+		%>
+		<c:if test="<%= true %>">	
+			<liferay-ui:icon
+				message="MENU ITEM TEST"
+				url=""
+			/>
+		</c:if>				
+
+		<%
 		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
-		LOG.debug("hasViewPermission: " + hasViewPermission);		
+		_log.debug("hasViewPermission: " + hasViewPermission);		
 		%>
 
 		<c:if test="<%= hasViewPermission %>">
@@ -124,6 +136,38 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 				url="<%= downloadURL %>"
 			/>
 		</c:if>
+		
+		<c:if test="<%= hasViewPermission %>">
+
+			<%
+			//
+			// LPS-33757 - http://issues.liferay.com/browse/LPS-33757
+			//
+			// Include custom menu items
+			logDebug("Include custom menu items");
+			final String SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT = "liferay.dl.folder.actions.menu.ext";
+			_log.debug("folder actions menu ext key: " + SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
+			logDebug("folder actions menu ext key: " + SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
+			String menuItemsStr = System.getProperty(SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
+			_log.debug("menuItemsStr: " + menuItemsStr);
+			logDebug("menuItemsStr: " + menuItemsStr);
+			String[] menuItems = StringUtil.split(PropsUtil.get(SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT));
+			_log.debug("menuItems.length: " + menuItems.length);
+			logDebug("menuItems.length: " + menuItems.length);
+			for (String menuItem : menuItems) {
+			    String menuItemJsp = "/document_library/folder_actions_menu_ext/" + menuItem + ".jsp";
+			    _log.debug("menuItemJsp: " + menuItemJsp);
+			    logDebug("menuItemJsp: " + menuItemJsp);
+			%>					
+				<%--
+				<liferay-util:include page="<%= menuItemJsp %>" />
+				--%>
+				<liferay-util:include page="<%= menuItemJsp %>" servletContext="<%= application %>" />
+			<%
+			}
+			%>
+
+		</c:if>			
 
 		<c:choose>
 			<c:when test="<%= folder != null %>">
@@ -192,6 +236,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 					/>
 				</c:if>
 				
+				<%--
 				<c:if test="<%= hasViewPermission %>">
 
 					<%
@@ -200,14 +245,14 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 					//
 					// Include custom menu items
 					final String SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT = "liferay.dl.folder.actions.menu.ext";
-					LOG.debug("folder actions menu ext key: " + SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
+					_log.debug("folder actions menu ext key: " + SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
 					String menuItemsStr = System.getProperty(SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT);
-					LOG.debug("menuItemsStr: " + menuItemsStr);
+					_log.debug("menuItemsStr: " + menuItemsStr);
 					String[] menuItems = StringUtil.split(PropsUtil.get(SYS_PROP_LIFERAY_DL_FOLDER_ACTIONS_MENU_EXT));
-					LOG.debug("menuItems.length: " + menuItems.length);
+					_log.debug("menuItems.length: " + menuItems.length);
 					for (String menuItem : menuItems) {
 					    String menuItemJsp = "/document_library/folder_actions_menu_ext/" + menuItem + ".jsp";
-					    LOG.debug("menuItemJsp: " + menuItemJsp);
+					    _log.debug("menuItemJsp: " + menuItemJsp);
 					    // request.setAttribute("folder_action::folder", folder);
 					%>					
 						<liferay-util:include page="<%=menuItemJsp %>" />		
@@ -215,7 +260,8 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 					}
 					%>
 
-				</c:if>								
+				</c:if>			
+				--%>					
 
 				<c:if test="<%= folder.isMountPoint() %>">
 
@@ -453,5 +499,13 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 </c:if>
 
 <%!
-private static Log LOG = LogFactoryUtil.getLog("portal-web.docroot.document_library.folder_action.jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_document_library_web.document_library.folder_action.jsp");
+%>
+
+<%
+private void logDebug(String msg) {
+	if (msg != null) {
+		System.out.println("folder_action.jsp : " + msg);
+	}
+}
 %>

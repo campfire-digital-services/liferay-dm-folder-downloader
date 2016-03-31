@@ -15,11 +15,23 @@
 */
 --%>
 
+<%
+//
+// LPS-33757 - http://issues.liferay.com/browse/LPS-33757
+//
+// This JSP file provides a sample solution to LPS-33757.
+//
+%>
 
 <%@ include file="/document_library/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.log.Log" %>
 <%@ page import="com.liferay.portal.kernel.log.LogFactoryUtil" %>
+
+<%
+// LPS-33757 - http://issues.liferay.com/browse/LPS-33757 
+// BEGIN folder_action.jsp snippet 
+%>
 
 <%
 String randomNamespace = null;
@@ -106,10 +118,21 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 %>
 
 <%
-if (LOG.isDebugEnabled()) {
-	LOG.debug("currentURL: " + currentURL);		
-	LOG.debug("folderId: " + folderId);
-	LOG.debug("repositoryId: " + repositoryId);
+// LPS-33757 - http://issues.liferay.com/browse/LPS-33757 
+// END folder_action.jsp snippet 
+%>
+
+<%
+//
+// LPS-33757 - http://issues.liferay.com/browse/LPS-33757
+//
+if (_log.isDebugEnabled()) {
+	_log.debug("currentURL: " + currentURL);
+	logDebug("currentURL: " + currentURL);
+	_log.debug("folderId: " + folderId);
+	logDebug("folderId: " + folderId);
+	_log.debug("repositoryId: " + repositoryId);
+	logDebug("repositoryId: " + repositoryId);
 }
 %>
 
@@ -117,7 +140,7 @@ if (LOG.isDebugEnabled()) {
 
 	<%
 	boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
-	LOG.debug("hasViewPermission: " + hasViewPermission);		
+	_log.debug("hasViewPermission: " + hasViewPermission);		
 	%>
 
 	<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">	
@@ -127,13 +150,13 @@ if (LOG.isDebugEnabled()) {
 	            <portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 	            <portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 	        </portlet:resourceURL>
-	        
+
 	        <liferay-ui:icon
 	            iconCssClass="download"
 	            message="download-folder-as-zip-file"
-				method="get"	            
+				method="get"
 	            url='<%= downloadResourceURL %>'
-	        />				        		
+	        />
 		</c:if>
 	</c:if>
 </liferay-util:buffer>
@@ -141,5 +164,14 @@ if (LOG.isDebugEnabled()) {
 <%= iconMenuExt %> 
 
 <%!
-private static Log LOG = LogFactoryUtil.getLog("portal-web.docroot.document_library.folder_actions_menu_ext.download_folder_zip.jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_document_library_web.document_library.folder_actions_menu_ext.folder_action_zip.jsp");
 %>
+
+<%
+private void logDebug(String msg) {
+	if (msg != null) {
+		System.out.println("folder_action_zip.jsp : " + msg);
+	}
+}
+%>
+
