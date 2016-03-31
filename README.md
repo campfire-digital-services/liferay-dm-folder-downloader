@@ -48,46 +48,32 @@ Step 3. Open ZIP file or save to local download folder in your web browser.
 
 Step 1. Checkout source from GitHub project
 
-Step 1.1. Checkout master from GitHub project
+e.g. Checkout master from GitHub project
 
-    NOTE: GitHub master and branch 7.0.x should always be the same.
+NOTE: GitHub master and branch 7.0.x should always be the same.
 
-    $ md work
-    $ cd work
-    $ md master
     $ git clone https://github.com/permeance/liferay-dm-folder-downloader
     Cloning into 'liferay-dm-folder-downloader'...
-    remote: Counting objects: 518, done.
-    remote: Compressing objects: 100% (223/223), done.
-    remote: Total 518 (delta 173), reused 502 (delta 157)
-    Receiving objects: 100% (518/518), 622.65 KiB | 273.00 KiB/s, done.
-    Resolving deltas: 100% (173/173), done.
-    Checking connectivity... done
+    . . .
+    $ git branch
+    * master
+    $ git status
+    On branch master
 
-Step 1.2. Checkout branch 6.1.x or 6.2.x from GitHub project
+e.g. Checkout branch 6.1.x, 6.2.x or 7.0.x from GitHub project
 
-    NOTE: This sample shows checkout for branch 6.2.x. 
-          The same process applies for 6.1.x
+NOTE: This sample shows checkout for branch 6.2.x. The same process applies for 6.1.x or 7.0.x
 
-    % md work
-    % cd work
-    % md -p liferay-dm-folder-downloader/branches/6.2.x
-    % cd liferay-dm-folder-downloader/branches/6.2.x
     % git clone https://github.com/permeance/liferay-dm-folder-downloader
     Cloning into 'liferay-dm-folder-downloader'...
-    remote: Counting objects: 475, done.
-    remote: Compressing objects: 100% (199/199), done.
-    remote: Total 475 (delta 151), reused 470 (delta 146)
-    Receiving objects: 100% (475/475), 618.21 KiB | 161.00 KiB/s, done.
-    Resolving deltas: 100% (151/151), done.
-    Checking connectivity... done
+    . . .
     % cd liferay-dm-folder-downloader
-    % git branch 6.2.x
     % git checkout 6.2.x
     Switched to branch '6.2.x'
-    % git status
-    # On branch 6.2.x
-    nothing to commit, working directory clean
+    $ git branch
+    * 6.2.x
+    $ git status
+    On branch 6.2.x    
 
 Step 2. Build and package
 
@@ -102,10 +88,11 @@ NOTE: You will require JDK 1.6+ and Maven 3.
 
 ### Liferay Portal + Apache Tomcat Bundle
 
-eg.
-
 Deploy "liferay-dm-folder-download-hook-A.B.C.war" to "LIFERAY_HOME/deploy" folder.
 
+e.g.
+
+    $ cp liferay-dm-folder-download-hook-A.B.C.war" to "LIFERAY_HOME/deploy
 
 ## Project Team
 
